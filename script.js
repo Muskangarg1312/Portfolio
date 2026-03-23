@@ -1,0 +1,1059 @@
+// ================= GLOBAL MOUSE =================
+let mouse = { x: 0, y: 0 };
+let disableParticles = false;
+let nodeBgColor;
+let textColor;
+let lineColor;
+
+function updateSkillTheme() {
+  const isDark = document.body.classList.contains("dark");
+
+  if (isDark) {
+    nodeBgColor = "rgba(18,18,35,0.92)";
+    textColor = "#ffffff";
+    lineColor = [255, 255, 255];
+  } else {
+    nodeBgColor = "rgba(255,255,255,0.95)";
+    textColor = "#171717";
+    lineColor = [0, 0, 0];
+  }
+}
+
+updateSkillTheme();
+
+// ================= THEME TOGGLE =================
+const toggleBtn = document.getElementById("themeToggle");
+
+// 🔹 Load saved theme on page load
+document.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem("theme");
+
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark");
+    if (toggleBtn) toggleBtn.textContent = "🌙";
+  } else {
+    if (toggleBtn) toggleBtn.textContent = "☀️";
+  }
+
+  updateSkillTheme();
+});
+
+if (toggleBtn) {
+  toggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+
+    if (document.body.classList.contains("dark")) {
+      localStorage.setItem("theme", "dark");
+      toggleBtn.textContent = "🌙";
+    } else {
+      localStorage.setItem("theme", "light");
+      toggleBtn.textContent = "☀️";
+    }
+
+    updateSkillTheme(); // 🔥 update particle theme
+  });
+}
+// ================= RAINBOW BACKGROUND =================
+const bgCanvas = document.getElementById("bgCanvas");
+const bgCtx = bgCanvas.getContext("2d");
+
+function resizeBgCanvas() {
+  bgCanvas.width = window.innerWidth;
+  bgCanvas.height = window.innerHeight;
+}
+
+resizeBgCanvas();
+window.addEventListener("resize", resizeBgCanvas);
+
+let particles = [];
+let hue = 0;
+
+// SINGLE mouse listener (important)
+document.addEventListener("mousemove", (e) => {
+  const skillsSection = document.getElementById("skills");
+
+  if (skillsSection) {
+    const rect = skillsSection.getBoundingClientRect();
+
+    const insideSkills =
+      e.clientX >= rect.left &&
+      e.clientX <= rect.right &&
+      e.clientY >= rect.top &&
+      e.clientY <= rect.bottom;
+
+    if (insideSkills) {
+      disableParticles = true;
+
+      // 🔥 instantly remove all existing particles
+      particles = [];
+
+      return;
+    } else {
+      disableParticles = false;
+    }
+  }
+
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
+});
+
+class Particle {
+  constructor() {
+    this.x = mouse.x;
+    this.y = mouse.y;
+    this.size = Math.random() * 30 + 10;
+    this.speedX = Math.random() * 2 - 1;
+    this.speedY = Math.random() * 2 - 1;
+    this.life = 100;
+    this.color = `hsl(${hue}, 100%, 60%)`;
+  }
+
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    this.life -= 2;
+  }
+
+  draw() {
+    bgCtx.globalAlpha = this.life / 100;
+    bgCtx.fillStyle = this.color;
+    bgCtx.beginPath();
+    bgCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    bgCtx.fill();
+    bgCtx.globalAlpha = 1;
+  }
+}
+
+function animateBackground() {
+  bgCtx.fillStyle = document.body.classList.contains("dark")
+    ? "rgba(10,10,25,0.15)"
+    : "rgba(247,248,252,0.08)";
+
+  bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+  hue += 2;
+
+  if (!disableParticles) {
+    for (let i = 0; i < 3; i++) {
+      particles.push(new Particle());
+    }
+  }
+
+  particles.forEach((particle, index) => {
+    particle.update();
+    particle.draw();
+
+    if (particle.life <= 0) {
+      particles.splice(index, 1);
+    }
+  });
+
+  requestAnimationFrame(animateBackground);
+}
+
+animateBackground();
+
+// ================= PREMIUM SKILLS NETWORK =================
+document.addEventListener("DOMContentLoaded", function () {
+  const canvas = document.getElementById("network");
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+
+  const groupCenters = {
+    frontend: { x: canvas.width * 0.25, y: canvas.height * 0.4 },
+    backend: { x: canvas.width * 0.75, y: canvas.height * 0.4 },
+    cms: { x: canvas.width * 0.5, y: canvas.height * 0.75 },
+  };
+
+  function resizeCanvas() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+
+    groupCenters.frontend.x = canvas.width * 0.25;
+    groupCenters.backend.x = canvas.width * 0.75;
+    groupCenters.cms.x = canvas.width * 0.5;
+
+    groupCenters.frontend.y = canvas.height * 0.4;
+    groupCenters.backend.y = canvas.height * 0.4;
+    groupCenters.cms.y = canvas.height * 0.75;
+
+    if (window.innerWidth < 768) {
+      groupCenters.frontend.x = canvas.width / 2;
+      groupCenters.backend.x = canvas.width / 2;
+      groupCenters.cms.x = canvas.width / 2;
+
+      groupCenters.frontend.y = canvas.height * 0.25;
+      groupCenters.backend.y = canvas.height * 0.5;
+      groupCenters.cms.y = canvas.height * 0.75;
+    }
+  }
+
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+
+  let skillMouse = { x: null, y: null };
+  let magneticRadius = 180;
+  let nodeScale = 1;
+
+  canvas.addEventListener("mousemove", function (e) {
+    const rect = canvas.getBoundingClientRect();
+    skillMouse.x = e.clientX - rect.left;
+    skillMouse.y = e.clientY - rect.top;
+  });
+
+  canvas.addEventListener("mouseleave", function () {
+    skillMouse.x = null;
+    skillMouse.y = null;
+  });
+
+  // 🔥 BASE ICON URL
+  const baseURL = "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/";
+
+  const skills = [
+    {
+      text: "HTML",
+      color: "#e34f26",
+      icon: "html5/html5-original.svg",
+      group: "frontend",
+    },
+    {
+      text: "CSS",
+      color: "#1572b6",
+      icon: "css3/css3-original.svg",
+      group: "frontend",
+    },
+    {
+      text: "JavaScript",
+      color: "#f7df1e",
+      icon: "javascript/javascript-original.svg",
+      group: "frontend",
+    },
+    {
+      text: "PHP",
+      color: "#777bb4",
+      icon: "php/php-original.svg",
+      group: "backend",
+    },
+    {
+      text: "Laravel",
+      color: "#ff2d20",
+      icon: "laravel/laravel-original.svg",
+      group: "backend",
+    },
+    {
+      text: "CodeIgniter",
+      color: "#dd4814",
+      icon: "codeigniter/codeigniter-plain.svg",
+      group: "backend",
+    },
+    {
+      text: "jQuery",
+      color: "#0769ad",
+      icon: "jquery/jquery-original.svg",
+      group: "frontend",
+    },
+  ];
+
+  // Manual URLs for non-devicon icons
+  const extraIcons = {
+    Canva:
+      "https://cdn.iconscout.com/icon/free/png-256/free-canva-icon-svg-download-png-3175197.png?f=webp",
+    "MS Office": "https://cdn-icons-png.flaticon.com/512/732/732221.png",
+    Shopify:
+      "https://cdn.iconscout.com/icon/free/png-256/free-shopify-logo-icon-svg-download-png-2945149.png?f=webp",
+    AJAX: "https://icons.veryicon.com/png/o/miscellaneous/basic-monochrome-icon/refresh-149.png",
+    WordPress: "https://cdn-icons-png.flaticon.com/512/174/174881.png",
+  };
+
+  skills.push(
+    {
+      text: "Canva",
+      color: "#00c4cc",
+      icon: extraIcons["Canva"],
+      group: "cms",
+    },
+    {
+      text: "MS Office",
+      color: "#fbbe07",
+      icon: extraIcons["MS Office"],
+      group: "cms",
+    },
+    {
+      text: "Shopify",
+      color: "#95bf47",
+      icon: extraIcons["Shopify"],
+      group: "cms",
+    },
+    {
+      text: "AJAX",
+      color: "#467cfd",
+      icon: extraIcons["AJAX"],
+      group: "frontend",
+    },
+    {
+      text: "WordPress",
+      color: "#21759b",
+      icon: extraIcons["WordPress"],
+      group: "cms",
+    },
+  );
+
+  class Node {
+    constructor(skill) {
+      this.text = skill.text;
+      this.color = skill.color;
+      this.group = skill.group;
+
+      this.iconSrc = skill.icon.startsWith("http")
+        ? skill.icon
+        : baseURL + skill.icon;
+
+      this.baseX = Math.random() * canvas.width;
+      this.baseY = Math.random() * canvas.height;
+      this.x = this.baseX;
+      this.y = this.baseY;
+
+      this.radius = Math.min(canvas.width, canvas.height) * 0.06;
+      this.angle = Math.random() * Math.PI * 2;
+      this.speed = 0.002 + Math.random() * 0.003;
+
+      this.icon = new Image();
+      this.iconLoaded = false;
+      this.iconError = false;
+
+      this.icon.onload = () => {
+        this.iconLoaded = true;
+      };
+
+      this.icon.onerror = () => {
+        this.iconError = true;
+        console.warn("Failed to load icon:", this.iconSrc);
+      };
+
+      this.icon.src = this.iconSrc;
+    }
+
+    draw() {
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.scale(nodeScale, nodeScale);
+      ctx.translate(-this.x, -this.y);
+      // Dark bubble
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = nodeBgColor;
+      ctx.fill();
+
+      // Glow border
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = this.color;
+      ctx.shadowColor = this.color;
+      ctx.shadowBlur = 8;
+      ctx.stroke();
+      ctx.closePath();
+
+      ctx.shadowBlur = 0;
+
+      // Draw icon ONLY if loaded and not broken
+      if (this.iconLoaded && !this.iconError) {
+        ctx.save();
+
+        // 🔹 Clip inside circle (prevents overflow)
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.clip();
+
+        // 🔹 Responsive sizing based on circle radius
+        const padding = this.radius * 0.75; // space inside circle
+        const iconSize = this.radius * 1.65 - padding;
+
+        ctx.drawImage(
+          this.icon,
+          this.x - iconSize / 2,
+          this.y - iconSize / 2,
+          iconSize,
+          iconSize,
+        );
+
+        ctx.restore();
+      } else {
+        // 🔹 fallback small colored dot if icon fails
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius * 0.25, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+
+      // 🔹 Responsive text
+      ctx.fillStyle = textColor;
+      ctx.textAlign = "center";
+
+      // Font size based on circle radius
+      const fontSize = this.radius * 0.35;
+      ctx.font = `${fontSize}px Poppins`;
+
+      // Position text just below circle
+      const textY = this.y + this.radius + this.radius * 0.5;
+
+      ctx.fillText(this.text, this.x, textY);
+      ctx.restore();
+    }
+
+    update() {
+      const center = groupCenters[this.group];
+      if (!center) return;
+
+      // Each group gets a movement radius
+      const groupRadius = Math.min(canvas.width, canvas.height) * 0.18;
+
+      // Move in circular floating motion
+      this.angle += this.speed;
+
+      this.x = center.x + Math.cos(this.angle + this.baseX) * groupRadius;
+      this.y = center.y + Math.sin(this.angle + this.baseY) * groupRadius;
+
+      // Mouse repulsion
+      if (skillMouse.x !== null && skillMouse.y !== null) {
+        const dx = skillMouse.x - this.x;
+        const dy = skillMouse.y - this.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < magneticRadius) {
+          const force = (magneticRadius - distance) / magneticRadius;
+
+          this.x -= dx * force * 0.05;
+          this.y -= dy * force * 0.05;
+
+          nodeScale = 1 + force * 0.35;
+        } else {
+          nodeScale = 1;
+        }
+      }
+
+      this.draw();
+    }
+  }
+
+  const nodes = skills.map((skill) => new Node(skill));
+
+  function drawBackgroundText() {
+    // 🚫 Hide headings completely on mobile
+    if (window.innerWidth < 768) return;
+
+    ctx.save();
+
+    ctx.globalAlpha = 0.06;
+    ctx.strokeStyle = textColor;
+    ctx.lineWidth = 3;
+    ctx.font = "bold 120px Poppins";
+    ctx.textAlign = "center";
+
+    ctx.strokeText("FRONTEND", canvas.width * 0.25, canvas.height / 2);
+    ctx.strokeText("BACKEND", canvas.width * 0.75, canvas.height / 2);
+    ctx.strokeText("CMS", canvas.width * 0.5, canvas.height * 0.85);
+
+    ctx.restore();
+  }
+
+  function connectNodes() {
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        const maxDistance = Math.min(canvas.width, canvas.height) * 0.25;
+        if (distance < maxDistance) {
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(${lineColor[0]},${lineColor[1]},${lineColor[2]},${1 - distance / maxDistance})`;
+          ctx.lineWidth = 1.2 + (1 - distance / maxDistance) * 2;
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function animateSkills() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    drawBackgroundText(); // 👈 add here
+    connectNodes();
+    nodes.forEach((node) => node.update());
+
+    requestAnimationFrame(animateSkills);
+  }
+
+  animateSkills();
+});
+
+const projects = document.querySelectorAll(".project");
+const images = document.querySelectorAll(".images");
+const indicator = document.querySelector(".timeline-indicator");
+const section = document.querySelector(".projects");
+const cursor = document.querySelector(".cursor");
+
+const total = projects.length;
+
+function updateProject(index) {
+  projects.forEach((p) => p.classList.remove("active"));
+  images.forEach((i) => i.classList.remove("active"));
+
+  projects[index].classList.add("active");
+  images[index].classList.add("active");
+
+  const timeline = document.querySelector(".timeline");
+  const timelineHeight = timeline.offsetHeight - 60;
+  const step = timelineHeight / (total - 1);
+
+  indicator.style.top = step * index + "px";
+}
+
+window.addEventListener("scroll", () => {
+  const rect = section.getBoundingClientRect();
+  const sectionHeight = section.offsetHeight - window.innerHeight;
+
+  if (rect.top <= 0 && rect.bottom >= window.innerHeight) {
+    let progress = Math.abs(rect.top) / sectionHeight;
+
+    let index = Math.floor(progress * total);
+
+    if (index >= total) index = total - 1;
+
+    updateProject(index);
+  }
+});
+
+const progress = document.querySelector(".timeline-progress");
+
+function updateProject(index) {
+  projects.forEach((p) => p.classList.remove("active"));
+  images.forEach((i) => i.classList.remove("active"));
+
+  projects[index].classList.add("active");
+  images[index].classList.add("active");
+
+  /* MOVE INDICATOR */
+
+  const move = index * 180;
+
+  indicator.style.top = move + "px";
+
+  /* PROGRESS BAR */
+
+  progress.style.height = move + 60 + "px";
+}
+
+/* CURSOR */
+// const cursor = document.querySelector(".cursor");
+
+document.addEventListener("mousemove", (e) => {
+  cursor.style.left = e.clientX + "px";
+  cursor.style.top = e.clientY + "px";
+});
+
+const projectArea = document.querySelector(".projects-right");
+
+projectArea.addEventListener("mouseenter", () => {
+  cursor.style.opacity = 1;
+  cursor.style.transform = "translate(-50%,-50%) scale(1)";
+});
+
+projectArea.addEventListener("mouseleave", () => {
+  cursor.style.opacity = 0;
+  cursor.style.transform = "translate(-50%,-50%) scale(.6)";
+});
+
+/* CLOCK MARKS */
+
+const marks = document.querySelector(".marks");
+
+for (let i = 0; i < 60; i++) {
+  const mark = document.createElement("span");
+
+  mark.style.height = i % 5 == 0 ? "10%" : "5%";
+  mark.style.transform = `rotate(${i * 6}deg)`;
+  mark.style.width = i % 5 === 0 ? "3px" : "1px";
+
+  marks.appendChild(mark);
+}
+
+// DIGITAL CLOCK
+
+function updateDigitalClock() {
+  const now = new Date();
+
+  let h = now.getHours();
+  let m = now.getMinutes();
+  let s = now.getSeconds();
+
+  const ampm = h >= 12 ? "PM" : "AM";
+  h = h % 12 || 12;
+
+  h = String(h).padStart(2, "0");
+  m = String(m).padStart(2, "0");
+  s = String(s).padStart(2, "0");
+
+  document.getElementById("digitalClock").innerText = `${h}:${m}:${s} ${ampm}`;
+}
+
+setInterval(updateDigitalClock, 1000);
+
+updateDigitalClock();
+
+/* CLOCK MOVEMENT */
+
+function updateClock() {
+  const now = new Date();
+
+  const s = now.getSeconds();
+  const m = now.getMinutes();
+  const h = now.getHours();
+
+  document.querySelector(".second").style.transform =
+    `translateX(-50%) rotate(${s * 6}deg)`;
+
+  document.querySelector(".minute").style.transform =
+    `translateX(-50%) rotate(${m * 6}deg)`;
+
+  document.querySelector(".hour").style.transform =
+    `translateX(-50%) rotate(${h * 30 + m * 0.5}deg)`;
+
+  /* DAY + DATE */
+
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
+  const day = days[now.getDay()];
+
+  const date = now.toLocaleDateString(undefined, {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+
+  document.getElementById("day").textContent = day;
+  document.getElementById("date").textContent = date;
+
+  // status (morning/evening)
+  let status = "";
+  if (h < 12) status = "🌅 Good Morning";
+  else if (h < 18) status = "☀️ Good Afternoon";
+  else status = "🌙 Good Evening";
+
+  document.getElementById("timeStatus").innerText = status;
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+
+function getLocation() {
+  if (!navigator.geolocation) {
+    document.getElementById("location").textContent = "Location not supported";
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(async (pos) => {
+    const lat = pos.coords.latitude;
+    const lon = pos.coords.longitude;
+
+    const res = await fetch(
+      `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`,
+    );
+
+    const data = await res.json();
+
+    document.getElementById("location").textContent =
+      `${data.city || data.locality}, ${data.countryName}`;
+  });
+}
+
+getLocation();
+
+/* SPOTIFY SONG FETCHING */
+
+const playlists = {
+  lofi: "https://open.spotify.com/embed/playlist/37i9dQZF1DWYoYGBbGKurt",
+
+  bollywood: "https://open.spotify.com/embed/playlist/37i9dQZF1DX0XUfTFmNBRM",
+
+  pop: "https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M",
+
+  chill: "https://open.spotify.com/embed/playlist/37i9dQZF1DX4WYpdgoIcn6",
+
+  workout: "https://open.spotify.com/embed/playlist/37i9dQZF1DX76Wlfdnj7AP",
+};
+
+function play(type) {
+  document.getElementById("player").src = playlists[type];
+}
+
+const allPlaylists = Object.values(playlists);
+
+function discover() {
+  let random = Math.floor(Math.random() * allPlaylists.length);
+
+  document.getElementById("player").src = allPlaylists[random];
+}
+
+function moreMusic() {
+  window.open("https://open.spotify.com/genre/0JQ5DAqbMKFEC4WFtoNRpw");
+}
+
+// CANVAS DRAW
+
+const canvas = document.getElementById("drawCanvas");
+const ctx = canvas.getContext("2d");
+
+const colorPicker = document.getElementById("colorPicker");
+const brushSize = document.getElementById("brushSize");
+
+const eraser = document.getElementById("eraser");
+const clearBtn = document.getElementById("clearCanvas");
+const saveBtn = document.getElementById("saveCanvas");
+
+let drawing = false;
+let eraseMode = false;
+
+function resizeCanvas() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+canvas.addEventListener("mousedown", () => (drawing = true));
+
+canvas.addEventListener("mouseup", () => {
+  drawing = false;
+  ctx.beginPath();
+});
+
+canvas.addEventListener("mouseleave", () => (drawing = false));
+
+canvas.addEventListener("mousemove", draw);
+
+let lastX = 0;
+let lastY = 0;
+
+canvas.addEventListener("mousedown", startDraw);
+canvas.addEventListener("mouseup", stopDraw);
+canvas.addEventListener("mouseleave", stopDraw);
+canvas.addEventListener("mousemove", draw);
+
+function startDraw(e) {
+  drawing = true;
+
+  const rect = canvas.getBoundingClientRect();
+
+  lastX = e.clientX - rect.left;
+  lastY = e.clientY - rect.top;
+}
+
+function stopDraw() {
+  drawing = false;
+  ctx.beginPath();
+}
+
+function draw(e) {
+  if (!drawing) return;
+
+  const rect = canvas.getBoundingClientRect();
+
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  ctx.lineWidth = brushSize.value;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.imageSmoothingEnabled = true;
+  if (eraseMode) {
+    ctx.globalCompositeOperation = "destination-out";
+  } else {
+    ctx.globalCompositeOperation = "source-over";
+    ctx.strokeStyle = colorPicker.value;
+  }
+
+  ctx.beginPath();
+  ctx.moveTo(lastX, lastY);
+  ctx.lineTo(x, y);
+  ctx.stroke();
+
+  lastX = x;
+  lastY = y;
+}
+
+/* ERASER */
+
+eraser.onclick = () => {
+  eraseMode = !eraseMode;
+
+  if (eraseMode) {
+    canvas.style.cursor = 'url("eraser.png") 8 24, auto';
+
+    eraser.style.background = "#ff3c3c";
+  } else {
+    canvas.style.cursor = 'url("./pencil.png") 4 24, auto';
+
+    eraser.style.background = "rgba(255,255,255,0.15)";
+  }
+};
+
+/* CLEAR */
+
+clearBtn.onclick = () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+};
+
+/* SAVE */
+
+saveBtn.onclick = () => {
+  const link = document.createElement("a");
+
+  link.download = "drawing.png";
+  link.href = canvas.toDataURL();
+
+  link.click();
+};
+
+// QUOTE GENERATOR
+
+fetch("https://dummyjson.com/quotes/random")
+  .then((res) => res.json())
+  .then((data) => {
+    document.getElementById("quoteText").innerText = `"${data.quote}"`;
+    document.getElementById("quoteAuthor").innerText = data.author;
+  })
+  .catch(() => {
+    document.getElementById("quoteText").innerText =
+      "Design is intelligence made visible.";
+
+    document.getElementById("quoteAuthor").innerText = "Alina Wheeler";
+  });
+
+// CREATIVE TOOLKIT
+
+function openTool(type) {
+  document.getElementById("popup").style.display = "flex";
+
+  if (type === "palette") showPalette();
+  if (type === "gradient") showGradient();
+  if (type === "shadow") showShadow();
+  if (type === "glass") showGlass();
+}
+
+function closeTool() {
+  document.getElementById("popup").style.display = "none";
+}
+
+/* COPY */
+function copy(btn, text) {
+  navigator.clipboard.writeText(text);
+  btn.innerText = "Copied ✓";
+  btn.classList.add("copied");
+
+  setTimeout(() => {
+    btn.innerText = "Copy CSS";
+    btn.classList.remove("copied");
+  }, 1500);
+}
+
+/* PALETTE */
+function showPalette() {
+  const c = document.getElementById("toolContent");
+
+  c.innerHTML = `
+<h3>Color Palette</h3>
+<button class="copy-btn" onclick="generatePalette()">Generate</button>
+<div class="palette" id="palette"></div>
+`;
+
+  generatePalette();
+}
+
+function generatePalette() {
+  const box = document.getElementById("palette");
+  box.innerHTML = "";
+
+  for (let i = 0; i < 5; i++) {
+    const color = `hsl(${Math.random() * 360},70%,60%)`;
+
+    const div = document.createElement("div");
+    div.className = "color";
+    div.style.background = color;
+    div.innerText = color;
+
+    div.onclick = () => {
+      navigator.clipboard.writeText(color);
+      div.innerText = "Copied!";
+      setTimeout(() => (div.innerText = color), 1000);
+    };
+
+    box.appendChild(div);
+  }
+}
+
+/* GRADIENT */
+let gradCSS = "";
+
+function showGradient() {
+  const c = document.getElementById("toolContent");
+
+  c.innerHTML = `
+<h3>Gradient Generator</h3>
+
+<label>Angle</label>
+<input type="range" id="angle" min="0" max="360" value="135">
+
+<button class="copy-btn" onclick="generateGradient()">Random Colors</button>
+
+<div class="gradient-preview" id="gradPreview"></div>
+
+<div class="code" id="gradCode"></div>
+
+<button class="copy-btn" id="copyGrad">Copy CSS</button>
+`;
+
+  document.getElementById("copyGrad").onclick = function () {
+    copy(this, gradCSS);
+  };
+
+  document.getElementById("angle").oninput = generateGradient;
+
+  generateGradient();
+}
+
+function generateGradient() {
+  const angle = document.getElementById("angle").value;
+
+  const c1 = `hsl(${Math.random() * 360},80%,60%)`;
+  const c2 = `hsl(${Math.random() * 360},80%,60%)`;
+
+  gradCSS = `background: linear-gradient(${angle}deg, ${c1}, ${c2});`;
+
+  document.getElementById("gradPreview").style.background =
+    `linear-gradient(${angle}deg, ${c1}, ${c2})`;
+
+  document.getElementById("gradCode").innerText = gradCSS;
+}
+
+/* SHADOW */
+let shadowCSS = "";
+
+function showShadow() {
+  const c = document.getElementById("toolContent");
+
+  c.innerHTML = `
+<h3>Advanced Shadow</h3>
+
+<label>Blur</label>
+<input type="range" id="blur" min="0" max="60" value="20">
+
+<label>Spread</label>
+<input type="range" id="spread" min="0" max="30" value="5">
+
+<label>Color</label>
+<input type="color" id="color" value="#000000">
+
+<div class="shadow-preview" id="shadowPreview"></div>
+
+<div class="code" id="shadowCode"></div>
+
+<button class="copy-btn" id="copyShadow">Copy CSS</button>
+`;
+
+  document.querySelectorAll("input").forEach((el) => {
+    el.oninput = updateShadow;
+  });
+
+  document.getElementById("copyShadow").onclick = function () {
+    copy(this, shadowCSS);
+  };
+
+  updateShadow();
+}
+
+function updateShadow() {
+  const blur = document.getElementById("blur").value;
+  const spread = document.getElementById("spread").value;
+  const color = document.getElementById("color").value;
+
+  shadowCSS = `
+box-shadow:
+0px 4px ${blur}px ${spread}px ${color}40,
+0px 8px ${blur * 1.5}px ${spread}px ${color}20;
+`;
+
+  document.getElementById("shadowPreview").style.boxShadow =
+    `0px 4px ${blur}px ${spread}px ${color}40,
+0px 8px ${blur * 1.5}px ${spread}px ${color}20`;
+
+  document.getElementById("shadowCode").innerText = shadowCSS;
+}
+
+/* GLASS */
+let glassCSS = "";
+
+function showGlass() {
+  const c = document.getElementById("toolContent");
+
+  c.innerHTML = `
+<h3>Glassmorphism</h3>
+
+<label>Blur</label>
+<input type="range" id="blur" min="0" max="30" value="10">
+
+<label>Opacity</label>
+<input type="range" id="opacity" min="0.1" max="1" step="0.1" value="0.2">
+
+<label>Border</label>
+<input type="range" id="border" min="0.1" max="1" step="0.1" value="0.3">
+
+<div class="glass-preview" id="glassPreview"></div>
+
+<div class="code" id="glassCode"></div>
+
+<button class="copy-btn" id="copyGlass">Copy CSS</button>
+`;
+
+  document.querySelectorAll("input").forEach((el) => {
+    el.oninput = updateGlass;
+  });
+
+  document.getElementById("copyGlass").onclick = function () {
+    copy(this, glassCSS);
+  };
+
+  updateGlass();
+}
+
+function updateGlass() {
+  const blur = document.getElementById("blur").value;
+  const opacity = document.getElementById("opacity").value;
+  const border = document.getElementById("border").value;
+
+  glassCSS = `
+background: rgba(255,255,255,${opacity});
+backdrop-filter: blur(${blur}px);
+border: 1px solid rgba(255,255,255,${border});
+border-radius: 16px;
+`;
+
+  const preview = document.getElementById("glassPreview");
+
+  preview.style.background = `rgba(255,255,255,${opacity})`;
+  preview.style.backdropFilter = `blur(${blur}px)`;
+  preview.style.border = `1px solid rgba(255,255,255,${border})`;
+
+  document.getElementById("glassCode").innerText = glassCSS;
+}

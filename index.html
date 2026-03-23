@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="favicon.ico" />
+    <title>Muskan Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- BACKGROUND CANVAS -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- NAVBAR -->
+    <header>
+      <div class="logo">Muskan<span>.</span></div>
+      <nav>
+        <a href="#">Work</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <button id="themeToggle" class="theme-btn">☀️</button>
+      </nav>
+    </header>
+
+    <!-- CURSOR -->
+
+    <div class="cursor">
+      <div class="cursor-rotate">
+        <svg viewBox="0 0 200 200" class="cursor-text">
+          <defs>
+            <path
+              id="circlePath"
+              d="
+          M 100, 100
+          m -75, 0
+          a 75,75 0 1,1 150,0
+          a 75,75 0 1,1 -150,0
+          "
+            />
+          </defs>
+
+          <text>
+            <textPath href="#circlePath">
+              VISIT PROJECT • VISIT PROJECT •
+            </textPath>
+          </text>
+        </svg>
+      </div>
+
+      <div class="cursor-center">👁</div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="hero-left">
+        <p class="tag">CREATIVE WEB DEVELOPER</p>
+
+        <h1>
+          Hi, I'm
+          <span class="name">Muskan</span>
+        </h1>
+
+        <h2 class="typing"></h2>
+
+        <p class="desc">
+          I build clean, interactive web experiences that feel alive.
+        </p>
+
+        <div class="buttons">
+          <button class="primary">View Work</button>
+          <button class="secondary">Contact Me</button>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="image-box style1">
+          <img src="profile.png" alt="profile" />
+        </div>
+      </div>
+      <div class="scroll-down">
+        <a href="#about">
+          <span>Scroll</span>
+          <div class="mouse">
+            <div class="wheel"></div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="about-wrapper">
+        <div class="about-text">
+          <h2>About Me</h2>
+
+          <p class="about-intro">
+            I’m Muskan — a creative front-end developer who blends design and
+            development to craft immersive web experiences.
+          </p>
+
+          <p>
+            I focus on building visually engaging, responsive, and
+            performance-optimized websites. My goal is not just to create
+            websites — but to create experiences that feel alive and
+            interactive.
+          </p>
+
+          <p>
+            I enjoy experimenting with animations, UI interactions, and modern
+            design trends to make every project unique.
+          </p>
+        </div>
+
+        <div class="about-highlight">
+          <div class="highlight-card">
+            <h3>Creative Thinking</h3>
+            <p>Design-driven development approach</p>
+          </div>
+
+          <div class="highlight-card">
+            <h3>Problem Solver</h3>
+            <p>Turning ideas into scalable solutions</p>
+          </div>
+
+          <div class="highlight-card">
+            <h3>Detail Oriented</h3>
+            <p>Pixel-perfect user experiences</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="marquee-section">
+        <div class="marquee-strip">
+          <div class="marquee-track">
+            <span>
+              CLIENT-FOCUSED ✦ USER-CENTERED DESIGN ◆ INTUITIVE INTERFACES ●
+              MODERN USER EXPERIENCE ✦ BUSINESS-DRIVEN SOLUTIONS ◆
+              PERFORMANCE-OPTIMIZED ● SCALABLE WEBSITES ✦ MOBILE-FIRST DESIGN ◆
+              ACCESSIBLE DESIGN ● HIGH-CONVERSION LAYOUTS ✦ FAST-LOADING PAGES ◆
+              CLEAN & MAINTAINABLE CODE ● PIXEL-PERFECT DESIGN ✦ SEO-FRIENDLY
+              STRUCTURE ◆ FUTURE-READY DEVELOPMENT ● RELIABLE DELIVERY ✦
+            </span>
+
+            <span>
+              CLIENT-FOCUSED ✦ USER-CENTERED DESIGN ◆ INTUITIVE INTERFACES ●
+              MODERN USER EXPERIENCE ✦ BUSINESS-DRIVEN SOLUTIONS ◆
+              PERFORMANCE-OPTIMIZED ● SCALABLE WEBSITES ✦ MOBILE-FIRST DESIGN ◆
+              ACCESSIBLE DESIGN ● HIGH-CONVERSION LAYOUTS ✦ FAST-LOADING PAGES ◆
+              CLEAN & MAINTAINABLE CODE ● PIXEL-PERFECT DESIGN ✦ SEO-FRIENDLY
+              STRUCTURE ◆ FUTURE-READY DEVELOPMENT ● RELIABLE DELIVERY ✦
+            </span>
+          </div>
+        </div>
+
+        <div class="marquee-bg"></div>
+      </div>
+    </section>
+
+    <section id="skills" class="skills-section">
+      <canvas id="network"></canvas>
+    </section>
+
+    <section class="projects">
+      <div class="projects-sticky">
+        <div class="projects-wrapper">
+          <!-- LEFT -->
+
+          <div class="projects-left">
+            <div class="project active">
+              <h2>Rune AI</h2>
+
+              <p>
+                Rune AI featuring powerful RAG system with multiple AI models
+                and deep research capabilities.
+              </p>
+
+              <ul class="features">
+                <li>⚡ Fast AI models</li>
+                <li>🧠 Thinking model</li>
+                <li>🚀 Pro deep analysis</li>
+              </ul>
+
+              <div class="tech">
+                <span>Next.js</span>
+                <span>Tailwind</span>
+                <span>Framer Motion</span>
+              </div>
+            </div>
+
+            <div class="project">
+              <h2>Finance Dashboard</h2>
+
+              <p>
+                Smart financial analytics dashboard for tracking investments and
+                revenue insights with modern visualization tools.
+              </p>
+
+              <ul class="features">
+                <li>📊 Data insights</li>
+                <li>💰 Investment tracking</li>
+                <li>📈 Smart charts</li>
+              </ul>
+
+              <div class="tech">
+                <span>React</span>
+                <span>D3.js</span>
+                <span>Node</span>
+              </div>
+            </div>
+
+            <div class="project">
+              <h2>Ecommerce Platform</h2>
+
+              <p>
+                Complete ecommerce system with product management, payments,
+                customer analytics and marketing automation.
+              </p>
+
+              <ul class="features">
+                <li>🛒 Product system</li>
+                <li>💳 Secure payments</li>
+                <li>📦 Inventory tracking</li>
+              </ul>
+
+              <div class="tech">
+                <span>Next.js</span>
+                <span>Stripe</span>
+                <span>MongoDB</span>
+              </div>
+            </div>
+
+            <div class="project">
+              <h2>Portfolio V2</h2>
+
+              <p>
+                Modern developer portfolio featuring smooth animations, premium
+                UI design and interactive storytelling.
+              </p>
+
+              <ul class="features">
+                <li>🎨 Premium UI</li>
+                <li>⚡ Smooth animations</li>
+                <li>📱 Fully responsive</li>
+              </ul>
+
+              <div class="tech">
+                <span>HTML</span>
+                <span>GSAP</span>
+                <span>Three.js</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- TIMELINE -->
+
+          <div class="timeline">
+            <div class="timeline-line"></div>
+            <div class="timeline-progress"></div>
+            <div class="timeline-indicator">
+              <img src="profile.png" />
+            </div>
+          </div>
+
+          <!-- RIGHT -->
+
+          <div class="projects-right">
+            <div class="images active">
+              <img src="https://picsum.photos/300/400?random=1" />
+              <img src="https://picsum.photos/300/400?random=2" />
+              <img src="https://picsum.photos/800/1000?random=3" />
+            </div>
+
+            <div class="images">
+              <img src="https://picsum.photos/300/400?random=4" />
+              <img src="https://picsum.photos/300/400?random=5" />
+              <img src="https://picsum.photos/800/1000?random=6" />
+            </div>
+
+            <div class="images">
+              <img src="https://picsum.photos/300/400?random=7" />
+              <img src="https://picsum.photos/300/400?random=8" />
+              <img src="https://picsum.photos/800/1000?random=9" />
+            </div>
+
+            <div class="images">
+              <img src="https://picsum.photos/300/400?random=10" />
+              <img src="https://picsum.photos/300/400?random=11" />
+              <img src="https://picsum.photos/800/1000?random=12" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="creative-lab">
+      <div class="lab-container">
+        <div class="lab-header">
+          <h2>Creative Lab</h2>
+          <p>Interactive elements inside my portfolio</p>
+        </div>
+
+        <div class="lab-grid">
+          <!-- CLOCK -->
+
+          <div class="lab-card clock-card">
+            <h3>Local Time</h3>
+
+            <div class="clock-container">
+              <div class="clock">
+                <div class="marks"></div>
+
+                <div class="hand hour"></div>
+                <div class="hand minute"></div>
+                <div class="hand second"></div>
+
+                <div class="center-dot"></div>
+              </div>
+
+              <!-- INFO -->
+              <div class="clock-info">
+                <div class="time-digital" id="digitalClock"></div>
+
+                <div class="date-line">
+                  <span id="day"></span>, <span id="date"></span>
+                </div>
+
+                <div class="location-line">
+                  📍 <span id="location">Detecting Location...</span>
+                </div>
+
+                <div class="time-status" id="timeStatus"></div>
+              </div>
+            </div>
+          </div>
+          <!-- SPOTIFY -->
+
+          <div class="lab-card spotify-card music-card">
+            <div class="music-title">🎧 Music Player</div>
+
+            <div class="categories">
+              <button onclick="play('lofi')">Lofi</button>
+              <button onclick="play('bollywood')">Bollywood</button>
+              <button onclick="play('pop')">Pop</button>
+              <button onclick="play('chill')">Chill</button>
+              <button onclick="play('workout')">Workout</button>
+            </div>
+
+            <iframe
+              id="player"
+              src="https://open.spotify.com/embed/playlist/37i9dQZF1DWYoYGBbGKurt"
+              width="100%"
+              height="100%"
+              frameborder="0"
+              allow="
+                autoplay;
+                clipboard-write;
+                encrypted-media;
+                fullscreen;
+                picture-in-picture;
+              "
+              loading="lazy"
+            >
+            </iframe>
+
+            <div class="actions">
+              <button class="discover" onclick="discover()">🎲 Discover</button>
+
+              <button class="more" onclick="moreMusic()">More Music</button>
+            </div>
+          </div>
+
+          <!-- CANVAS -->
+
+          <div class="lab-card canvas-card">
+            <h3>Creative Canvas</h3>
+
+            <div class="canvas-toolbar">
+              <input type="color" id="colorPicker" value="#ffffff" />
+
+              <input type="range" id="brushSize" min="1" max="20" value="3" />
+
+              <button id="eraser">Eraser</button>
+
+              <button id="clearCanvas">Clear</button>
+
+              <button id="saveCanvas">Save</button>
+            </div>
+
+            <div class="card-content">
+              <canvas id="drawCanvas"></canvas>
+            </div>
+          </div>
+
+          <!-- TOOLKIT CARD -->
+
+          <div class="lab-card toolkit-card">
+            <h3>Creative Toolkit</h3>
+
+            <div class="tool-grid">
+              <div class="tool" onclick="openTool('palette')">
+                🎨<span>Palette</span>
+              </div>
+              <div class="tool" onclick="openTool('gradient')">
+                🌈<span>Gradient</span>
+              </div>
+              <div class="tool" onclick="openTool('shadow')">
+                ✨<span>Shadow</span>
+              </div>
+              <div class="tool" onclick="openTool('glass')">
+                🧊<span>Glass UI</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="popup" id="popup">
+            <div class="popup-box">
+              <span class="close" onclick="closeTool()">✕</span>
+              <div id="toolContent"></div>
+            </div>
+          </div>
+
+          <!-- QUOTE -->
+
+          <div class="lab-card quote-card">
+            <h3>Quote of the Day</h3>
+
+            <div class="card-content quote-box">
+              <h2 id="quoteText" class="name"></h2>
+              <span id="quoteAuthor"></span>
+            </div>
+          </div>
+
+          <!-- COMMENTS -->
+
+          <div class="lab-card comment-card">
+            <h3>Leave a Comment</h3>
+
+            <div class="card-content">
+              <textarea
+                class="comment-input"
+                placeholder="Write something..."
+              ></textarea>
+              <!-- <input class="comment-input" placeholder="Write something..." /> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>

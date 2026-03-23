@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Projects Scroll Section</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial;
+      }
+
+      :root {
+        --text: #ffffff;
+        --soft: #bfbfbf;
+        --border: #333;
+        --bg: #0b0b0b;
+      }
+
+      @media (prefers-color-scheme: light) {
+        :root {
+          --text: #111;
+          --soft: #555;
+          --border: #ddd;
+          --bg: #ffffff;
+        }
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        overflow-x: hidden;
+      }
+
+      /* SECTION */
+
+      .projects {
+        height: 400vh;
+        padding: 0 80px;
+        position: relative;
+      }
+
+      .projects-sticky {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+      }
+
+      /* GRID */
+
+      .projects-wrapper {
+        width: 100%;
+        max-width: 1600px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: 25% 10% 65%;
+        align-items: center;
+      }
+
+      /* LEFT CONTENT */
+
+      .projects-left {
+        position: relative;
+        height: 420px;
+        padding-right: 40px;
+      }
+
+      .project {
+        position: absolute;
+        top: 0;
+        opacity: 0;
+        transform: translateY(60px) scale(0.96);
+        transition: 0.65s cubic-bezier(0.22, 0.61, 0.36, 1);
+      }
+
+      .project.active {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+      .project h2 {
+        font-size: 38px;
+        margin-bottom: 15px;
+      }
+
+      .project p {
+        color: var(--soft);
+        line-height: 1.6;
+        margin-bottom: 18px;
+      }
+
+      .project ul {
+        padding-left: 18px;
+        margin-bottom: 20px;
+      }
+
+      .project li {
+        margin-bottom: 6px;
+      }
+
+      .tech span {
+        padding: 6px 14px;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        font-size: 13px;
+        margin-right: 6px;
+      }
+
+      /* TIMELINE */
+
+      .timeline {
+        position: relative;
+        height: 600px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .timeline-line {
+        width: 3px;
+        height: 100%;
+        background: var(--border);
+        position: absolute;
+      }
+
+      .timeline-indicator {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        overflow: hidden;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: 0.5s;
+      }
+
+      .timeline-indicator img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top;
+      }
+
+      /* RIGHT IMAGES */
+
+      .projects-right {
+        position: relative;
+        height: 640px;
+        width: 100%;
+      }
+
+      .images {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transform: scale(0.92);
+        transition: 0.75s cubic-bezier(0.22, 0.61, 0.36, 1);
+      }
+
+      .images.active {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      /* BIG IMAGE */
+
+      .images img:nth-child(3) {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 70%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 20px;
+      }
+
+      /* SMALL TOP */
+
+      .images img:nth-child(1) {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 24%;
+        height: 48%;
+        object-fit: cover;
+        border-radius: 18px;
+      }
+
+      /* SMALL BOTTOM */
+
+      .images img:nth-child(2) {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 24%;
+        height: 48%;
+        object-fit: cover;
+        border-radius: 18px;
+      }
+
+      /* CURSOR */
+
+      .cursor {
+        position: fixed;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: white;
+        color: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        pointer-events: none;
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.6);
+        transition: 0.2s;
+        z-index: 1000;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="cursor">View Project</div>
+
+    <section class="projects">
+      <div class="projects-sticky">
+        <div class="projects-wrapper">
+          <!-- LEFT -->
+
+          <div class="projects-left">
+            <div class="project active">
+              <h2>Rune AI</h2>
+
+              <p>
+                Rune AI featuring powerful RAG system with multiple AI models
+                and deep research capabilities.
+              </p>
+
+              <ul>
+                <li>⚡ Fast AI models</li>
+                <li>🧠 Thinking model</li>
+                <li>🚀 Pro deep analysis</li>
+              </ul>
+
+              <div class="tech">
+                <span>Next.js</span>
+                <span>Tailwind</span>
+                <span>Framer Motion</span>
+              </div>
+            </div>
+
+            <div class="project">
+              <h2>Finance Dashboard</h2>
+
+              <p>
+                Smart financial analytics dashboard for tracking investments and
+                revenue insights with modern visualization tools.
+              </p>
+
+              <ul>
+                <li>📊 Data insights</li>
+                <li>💰 Investment tracking</li>
+                <li>📈 Smart charts</li>
+              </ul>
+
+              <div class="tech">
+                <span>React</span>
+                <span>D3.js</span>
+                <span>Node</span>
+              </div>
+            </div>
+
+            <div class="project">
+              <h2>Ecommerce Platform</h2>
+
+              <p>
+                Complete ecommerce system with product management, payments,
+                customer analytics and marketing automation.
+              </p>
+
+              <ul>
+                <li>🛒 Product system</li>
+                <li>💳 Secure payments</li>
+                <li>📦 Inventory tracking</li>
+              </ul>
+
+              <div class="tech">
+                <span>Next.js</span>
+                <span>Stripe</span>
+                <span>MongoDB</span>
+              </div>
+            </div>
+
+            <div class="project">
+              <h2>Portfolio V2</h2>
+
+              <p>
+                Modern developer portfolio featuring smooth animations, premium
+                UI design and interactive storytelling.
+              </p>
+
+              <ul>
+                <li>🎨 Premium UI</li>
+                <li>⚡ Smooth animations</li>
+                <li>📱 Fully responsive</li>
+              </ul>
+
+              <div class="tech">
+                <span>HTML</span>
+                <span>GSAP</span>
+                <span>Three.js</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- TIMELINE -->
+
+          <div class="timeline">
+            <div class="timeline-line"></div>
+
+            <div class="timeline-indicator">
+              <img src="profile.png" />
+            </div>
+          </div>
+
+          <!-- RIGHT -->
+
+          <div class="projects-right">
+            <div class="images active">
+              <img src="https://picsum.photos/300/400?random=1" />
+              <img src="https://picsum.photos/300/400?random=2" />
+              <img src="https://picsum.photos/800/1000?random=3" />
+            </div>
+
+            <div class="images">
+              <img src="https://picsum.photos/300/400?random=4" />
+              <img src="https://picsum.photos/300/400?random=5" />
+              <img src="https://picsum.photos/800/1000?random=6" />
+            </div>
+
+            <div class="images">
+              <img src="https://picsum.photos/300/400?random=7" />
+              <img src="https://picsum.photos/300/400?random=8" />
+              <img src="https://picsum.photos/800/1000?random=9" />
+            </div>
+
+            <div class="images">
+              <img src="https://picsum.photos/300/400?random=10" />
+              <img src="https://picsum.photos/300/400?random=11" />
+              <img src="https://picsum.photos/800/1000?random=12" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      const projects = document.querySelectorAll(".project");
+      const images = document.querySelectorAll(".images");
+      const indicator = document.querySelector(".timeline-indicator");
+      const cursor = document.querySelector(".cursor");
+      const section = document.querySelector(".projects");
+
+      let current = 0;
+      let scrolling = false;
+
+      const total = projects.length;
+
+      function updateProject(index) {
+        projects.forEach((p) => p.classList.remove("active"));
+        images.forEach((i) => i.classList.remove("active"));
+
+        projects[index].classList.add("active");
+        images[index].classList.add("active");
+
+        const timeline = document.querySelector(".timeline");
+        const timelineHeight = timeline.offsetHeight - 60;
+        const step = timelineHeight / (total - 1);
+
+        indicator.style.top = step * index + "px";
+      }
+
+      /* SCROLL CONTROL */
+
+      window.addEventListener(
+        "wheel",
+        (e) => {
+          const rect = section.getBoundingClientRect();
+
+          if (rect.top <= 0 && rect.bottom >= window.innerHeight) {
+            e.preventDefault();
+
+            if (scrolling) return;
+
+            scrolling = true;
+
+            if (e.deltaY > 0) {
+              current++;
+            } else {
+              current--;
+            }
+
+            current = Math.max(0, Math.min(current, total - 1));
+
+            updateProject(current);
+
+            setTimeout(() => {
+              scrolling = false;
+            }, 700);
+          }
+        },
+        { passive: false },
+      );
+
+      /* CURSOR */
+
+      document.addEventListener("mousemove", (e) => {
+        cursor.style.left = e.clientX + "px";
+        cursor.style.top = e.clientY + "px";
+      });
+
+      document
+        .querySelector(".projects-right")
+        .addEventListener("mouseenter", () => {
+          cursor.style.opacity = 1;
+          cursor.style.transform = "translate(-50%,-50%) scale(1)";
+        });
+
+      document
+        .querySelector(".projects-right")
+        .addEventListener("mouseleave", () => {
+          cursor.style.opacity = 0;
+          cursor.style.transform = "translate(-50%,-50%) scale(.6)";
+        });
+    </script>
+  </body>
+</html>
