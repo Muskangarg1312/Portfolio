@@ -466,46 +466,8 @@ body.dark .projects-subtitle {
   z-index: 2;
 }
 
-/* ================= MOBILE ONLY ================= */
-@media (max-width: 768px) {
-  .marquee-section {
-    height: 80px; /* reduce height */
-  }
-
-  .marquee-strip {
-    width: 180%;
-    left: -40%;
-    transform: rotate(-4deg); /* less tilt */
-    padding: 10px 0;
-  }
-
-  .marquee-track {
-    gap: 40px; /* smaller gap */
-    animation: scroll 12s linear infinite; /* faster for small screens */
-  }
-
-  .marquee-track span {
-    font-size: 14px; /* smaller text */
-    letter-spacing: 0.08em;
-  }
-}
-
-/* EXTRA SMALL DEVICES */
-@media (max-width: 480px) {
-  .marquee-section {
-    height: 70px;
-  }
-
-  .marquee-strip {
-    width: 200%;
-    left: -50%;
-    transform: rotate(-3deg);
-  }
-
-  .marquee-track span {
-    font-size: 12px;
-    letter-spacing: 0.05em;
-  }
+.marquee-mobile-section {
+  display: none;
 }
 
 /* ===== ANIMATION ===== */
@@ -1022,7 +984,7 @@ body.dark .cursor {
   grid-template-areas:
     "clock canvas music"
     "clock toolkit music"
-    "comment comment quote";
+    "quote comment comment";
 
   grid-auto-rows: minmax(240px, auto);
   gap: 26px;
