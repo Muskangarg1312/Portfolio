@@ -153,6 +153,30 @@ function animateBackground() {
 
 animateBackground();
 
+function initRangeSliders() {
+  const sliders = document.querySelectorAll('input[type="range"]');
+
+  sliders.forEach((slider) => {
+    const update = () => {
+      const value =
+        ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+
+      slider.style.background = `
+        linear-gradient(
+          to right,
+          #6c63ff, 
+          #ff4ecd,
+          #e0e0e0 ${value}%,
+          #e0e0e0 100%
+        )
+      `;
+    };
+
+    slider.addEventListener("input", update);
+    update(); // initial fill
+  });
+}
+
 // ================= PREMIUM SKILLS NETWORK =================
 document.addEventListener("DOMContentLoaded", function () {
   const canvas = document.getElementById("network");
@@ -727,6 +751,7 @@ let eraseMode = false;
 function resizeCanvas() {
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
+  initRangeSliders();
 }
 
 resizeCanvas();
@@ -832,6 +857,10 @@ fetch("https://dummyjson.com/quotes/random")
   .then((res) => res.json())
   .then((data) => {
     document.getElementById("quoteText").innerText = `"${data.quote}"`;
+    document.getElementById("quoteText").onclick = function () {
+      this.classList.toggle("expand");
+    };
+
     document.getElementById("quoteAuthor").innerText = data.author;
   })
   .catch(() => {
@@ -903,68 +932,107 @@ function generatePalette() {
   }
 }
 
-/* GRADIENT */
 let gradCSS = "";
+let color1 = "";
+let color2 = "";
 
 function showGradient() {
   const c = document.getElementById("toolContent");
 
   c.innerHTML = `
 <h3>Gradient Generator</h3>
-
+  
 <label>Angle</label>
 <input type="range" id="angle" min="0" max="360" value="135">
-
-<button class="copy-btn" onclick="generateGradient()">Random Colors</button>
-
+  
+<button class="copy-btn" id="randomBtn">Random Colors</button>
+  
 <div class="gradient-preview" id="gradPreview"></div>
-
+  
 <div class="code" id="gradCode"></div>
-
+  
 <button class="copy-btn" id="copyGrad">Copy CSS</button>
 `;
+  initRangeSliders();
 
   document.getElementById("copyGrad").onclick = function () {
     copy(this, gradCSS);
   };
 
-  document.getElementById("angle").oninput = generateGradient;
+  // 🔥 only update angle (no new colors)
+  document.getElementById("angle").oninput = updateGradient;
 
-  generateGradient();
+  // 🔥 generate new colors only on button click
+  document.getElementById("randomBtn").onclick = generateColors;
+
+  generateColors(); // initial
 }
 
-function generateGradient() {
+function generateColors() {
+  color1 = `hsl(${Math.random() * 360},80%,60%)`;
+  color2 = `hsl(${Math.random() * 360},80%,60%)`;
+
+  updateGradient();
+}
+
+function updateGradient() {
   const angle = document.getElementById("angle").value;
 
-  const c1 = `hsl(${Math.random() * 360},80%,60%)`;
-  const c2 = `hsl(${Math.random() * 360},80%,60%)`;
-
-  gradCSS = `background: linear-gradient(${angle}deg, ${c1}, ${c2});`;
+  gradCSS = `background: linear-gradient(${angle}deg, ${color1} 0%, ${color2} 100%);`;
 
   document.getElementById("gradPreview").style.background =
-    `linear-gradient(${angle}deg, ${c1}, ${c2})`;
+    `linear-gradient(${angle}deg, ${color1}, ${color2})`;
 
   document.getElementById("gradCode").innerText = gradCSS;
 }
 
 /* SHADOW */
 let shadowCSS = "";
+let currentColor = "";
 
 function showShadow() {
   const c = document.getElementById("toolContent");
 
   c.innerHTML = `
-<h3>Advanced Shadow</h3>
+<h3>Shadow Generator</h3>
 
-<label>Blur</label>
-<input type="range" id="blur" min="0" max="60" value="20">
+<div class="shadow-grid">
 
-<label>Spread</label>
-<input type="range" id="spread" min="0" max="30" value="5">
+  <div>
+    <label>X Offset</label>
+    <input type="range" id="x" min="-50" max="50" value="0">
+  </div>
 
-<label>Color</label>
-<input type="color" id="color" value="#000000">
+  <div>
+    <label>Y Offset</label>
+    <input type="range" id="y" min="-50" max="50" value="10">
+  </div>
 
+  <div>
+    <label>Blur</label>
+    <input type="range" id="blur" min="0" max="80" value="20">
+  </div>
+
+  <div>
+    <label>Spread</label>
+    <input type="range" id="spread" min="-20" max="40" value="5">
+  </div>
+
+  <div>
+    <label>Opacity</label>
+    <input type="range" id="opacity" min="0" max="100" value="40">
+  </div>
+
+  <div class="color-field">
+    <label>Color</label>
+    <div class="color-box">
+      <input type="color" id="colorPickerr" value="#6c63ff">
+    </div>
+  </div>
+
+</div>
+
+<!-- 👇 GRID KE BAHAR -->
 <div class="shadow-preview" id="shadowPreview"></div>
 
 <div class="code" id="shadowCode"></div>
@@ -972,54 +1040,95 @@ function showShadow() {
 <button class="copy-btn" id="copyShadow">Copy CSS</button>
 `;
 
-  document.querySelectorAll("input").forEach((el) => {
-    el.oninput = updateShadow;
-  });
+  // 👇 individually bind (important fix)
+  document.getElementById("x").oninput = updateShadow;
+  document.getElementById("y").oninput = updateShadow;
+  document.getElementById("blur").oninput = updateShadow;
+  document.getElementById("spread").oninput = updateShadow;
+  document.getElementById("opacity").oninput = updateShadow;
+  document.getElementById("colorPickerr").oninput = updateShadow;
 
   document.getElementById("copyShadow").onclick = function () {
     copy(this, shadowCSS);
   };
-
+  initRangeSliders();
   updateShadow();
 }
 
+/* UPDATE */
 function updateShadow() {
-  const blur = document.getElementById("blur").value;
-  const spread = document.getElementById("spread").value;
-  const color = document.getElementById("color").value;
+  const x = +document.getElementById("x").value;
+  const y = +document.getElementById("y").value;
+  const blur = +document.getElementById("blur").value;
+  const spread = +document.getElementById("spread").value;
+  const opacity = +document.getElementById("opacity").value;
 
-  shadowCSS = `
-box-shadow:
-0px 4px ${blur}px ${spread}px ${color}40,
-0px 8px ${blur * 1.5}px ${spread}px ${color}20;
-`;
+  const hex = document.getElementById("colorPickerr").value;
 
-  document.getElementById("shadowPreview").style.boxShadow =
-    `0px 4px ${blur}px ${spread}px ${color}40,
-0px 8px ${blur * 1.5}px ${spread}px ${color}20`;
+  // HEX → RGB
+  const r = parseInt(hex.substring(1, 3), 16);
+  const g = parseInt(hex.substring(3, 5), 16);
+  const b = parseInt(hex.substring(5, 7), 16);
+
+  const color = `rgba(${r}, ${g}, ${b}, ${opacity / 100})`;
+
+  shadowCSS = `box-shadow: ${x}px ${y}px ${blur}px ${spread}px ${color};`;
+
+  const preview = document.getElementById("shadowPreview");
+
+  preview.style.boxShadow = `${x}px ${y}px ${blur}px ${spread}px ${color}`;
 
   document.getElementById("shadowCode").innerText = shadowCSS;
 }
 
-/* GLASS */
+/* GLASS ADVANCED */
 let glassCSS = "";
 
 function showGlass() {
   const c = document.getElementById("toolContent");
 
   c.innerHTML = `
-<h3>Glassmorphism</h3>
+<h3>Advanced Glass UI</h3>
 
+<div class="glass-grid">
+
+<div>
 <label>Blur</label>
-<input type="range" id="blur" min="0" max="30" value="10">
+<input type="range" id="blur" min="0" max="40" value="15">
+</div>
 
-<label>Opacity</label>
-<input type="range" id="opacity" min="0.1" max="1" step="0.1" value="0.2">
+<div>
+<label>Transparency</label>
+<input type="range" id="opacity" min="0" max="100" value="20">
+</div>
 
-<label>Border</label>
-<input type="range" id="border" min="0.1" max="1" step="0.1" value="0.3">
+<div>
+<label>Border Strength</label>
+<input type="range" id="border" min="0" max="100" value="30">
+</div>
 
-<div class="glass-preview" id="glassPreview"></div>
+<div>
+<label>Shadow</label>
+<input type="range" id="shadow" min="0" max="50" value="20">
+</div>
+
+<div>
+<label>Saturation</label>
+<input type="range" id="saturation" min="50" max="200" value="120">
+</div>
+
+<div class="color-field">
+<label>Color</label>
+  <div class="color-box">
+    <input type="color" id="tint" value="#6c63ff">
+  </div>
+</div>
+
+</div>
+
+<div class="glass-preview" id="glassPreview">
+  <span>Glass UI</span>
+</div>
 
 <div class="code" id="glassCode"></div>
 
@@ -1034,6 +1143,7 @@ function showGlass() {
     copy(this, glassCSS);
   };
 
+  initRangeSliders();
   updateGlass();
 }
 
@@ -1041,19 +1151,33 @@ function updateGlass() {
   const blur = document.getElementById("blur").value;
   const opacity = document.getElementById("opacity").value;
   const border = document.getElementById("border").value;
+  const shadow = document.getElementById("shadow").value;
+  const saturation = document.getElementById("saturation").value;
+  const tint = document.getElementById("tint").value;
+
+  // HEX → RGB
+  const r = parseInt(tint.substr(1, 2), 16);
+  const g = parseInt(tint.substr(3, 2), 16);
+  const b = parseInt(tint.substr(5, 2), 16);
+
+  const bg = `rgba(${r}, ${g}, ${b}, ${opacity / 100})`;
 
   glassCSS = `
-background: rgba(255,255,255,${opacity});
-backdrop-filter: blur(${blur}px);
-border: 1px solid rgba(255,255,255,${border});
+background: ${bg};
+backdrop-filter: blur(${blur}px) saturate(${saturation}%);
+-webkit-backdrop-filter: blur(${blur}px) saturate(${saturation}%);
+border: 1px solid rgba(255,255,255,${border / 100});
+box-shadow: 0 8px ${shadow * 2}px rgba(0,0,0,0.3);
 border-radius: 16px;
 `;
 
   const preview = document.getElementById("glassPreview");
 
-  preview.style.background = `rgba(255,255,255,${opacity})`;
-  preview.style.backdropFilter = `blur(${blur}px)`;
-  preview.style.border = `1px solid rgba(255,255,255,${border})`;
+  preview.style.background = bg;
+  preview.style.backdropFilter = `blur(${blur}px) saturate(${saturation}%)`;
+  preview.style.webkitBackdropFilter = `blur(${blur}px) saturate(${saturation}%)`;
+  preview.style.border = `1px solid rgba(255,255,255,${border / 100})`;
+  preview.style.boxShadow = `0 8px ${shadow * 2}px rgba(0,0,0,0.3)`;
 
   document.getElementById("glassCode").innerText = glassCSS;
 }

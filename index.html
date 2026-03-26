@@ -14,6 +14,9 @@
       href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap"
       rel="stylesheet"
     />
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+    <script type="module" src="comment.js"></script>
   </head>
   <body>
     <!-- BACKGROUND CANVAS -->
@@ -160,6 +163,30 @@
         </div>
 
         <div class="marquee-bg"></div>
+      </div>
+
+      <div class="marquee-mobile-section">
+        <div class="marquee-mobile-strip">
+          <div class="marquee-mobile-track">
+            <span>
+              CLIENT-FOCUSED ✦ USER-CENTERED DESIGN ◆ INTUITIVE INTERFACES ●
+              MODERN USER EXPERIENCE ✦ BUSINESS-DRIVEN SOLUTIONS ◆
+              PERFORMANCE-OPTIMIZED ● SCALABLE WEBSITES ✦ MOBILE-FIRST DESIGN ◆
+              ACCESSIBLE DESIGN ● HIGH-CONVERSION LAYOUTS ✦ FAST-LOADING PAGES ◆
+              CLEAN & MAINTAINABLE CODE ● PIXEL-PERFECT DESIGN ✦ SEO-FRIENDLY
+              STRUCTURE ◆ FUTURE-READY DEVELOPMENT ● RELIABLE DELIVERY ✦
+            </span>
+
+            <span>
+              CLIENT-FOCUSED ✦ USER-CENTERED DESIGN ◆ INTUITIVE INTERFACES ●
+              MODERN USER EXPERIENCE ✦ BUSINESS-DRIVEN SOLUTIONS ◆
+              PERFORMANCE-OPTIMIZED ● SCALABLE WEBSITES ✦ MOBILE-FIRST DESIGN ◆
+              ACCESSIBLE DESIGN ● HIGH-CONVERSION LAYOUTS ✦ FAST-LOADING PAGES ◆
+              CLEAN & MAINTAINABLE CODE ● PIXEL-PERFECT DESIGN ✦ SEO-FRIENDLY
+              STRUCTURE ◆ FUTURE-READY DEVELOPMENT ● RELIABLE DELIVERY ✦
+            </span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -370,9 +397,13 @@
             </iframe>
 
             <div class="actions">
-              <button class="discover" onclick="discover()">🎲 Discover</button>
+              <button class="discover1 primary" onclick="discover()">
+                🎲 Discover
+              </button>
 
-              <button class="more" onclick="moreMusic()">More Music</button>
+              <button class="more1 secondary" onclick="moreMusic()">
+                More Music
+              </button>
             </div>
           </div>
 
@@ -444,10 +475,32 @@
 
             <div class="card-content">
               <textarea
+                id="commentInput"
                 class="comment-input"
                 placeholder="Write something..."
               ></textarea>
-              <!-- <input class="comment-input" placeholder="Write something..." /> -->
+
+              <div class="comment-actions">
+                <button id="postBtn" class="comment-btn1 primary">Post</button>
+                <button
+                  class="comment-btn1 ghost secondary"
+                  onclick="openComments()"
+                >
+                  View Comments
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- POPUP -->
+          <div id="commentModal" class="comment-modal">
+            <div class="comment-box">
+              <div class="comment-header">
+                <h3>All Comments</h3>
+                <span class="close" onclick="closeComments()">✕</span>
+              </div>
+
+              <div id="commentList" class="comment-list"></div>
             </div>
           </div>
         </div>
