@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
     cms: { x: canvas.width * 0.5, y: canvas.height * 0.75 },
   };
 
-  function resizeCanvas() {
+  function resizeCanvas1() {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
 
@@ -189,8 +189,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  resizeCanvas();
-  window.addEventListener("resize", resizeCanvas);
+  resizeCanvas1();
+  window.addEventListener("resize", resizeCanvas1);
 
   let skillMouse = { x: null, y: null };
   let magneticRadius = 180;
@@ -590,6 +590,32 @@ projectArea.addEventListener("mouseleave", () => {
   cursor.style.transform = "translate(-50%,-50%) scale(.6)";
 });
 
+// ONLY run on mobile
+if (window.innerWidth <= 768) {
+  const swipers = document.querySelectorAll(".mySwiper");
+
+  swipers.forEach((swiperEl) => {
+    new Swiper(swiperEl, {
+      slidesPerView: 1,
+      spaceBetween: 10,
+
+      loop: true,
+
+      autoplay: {
+        delay: 2500,
+        disableOnInteraction: false,
+      },
+
+      pagination: {
+        el: swiperEl.querySelector(".swiper-pagination"),
+        clickable: true,
+      },
+
+      grabCursor: true,
+    });
+  });
+}
+
 /* CLOCK MARKS */
 
 const marks = document.querySelector(".marks");
@@ -749,12 +775,17 @@ let drawing = false;
 let eraseMode = false;
 
 function resizeCanvas() {
-  canvas.width = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
+  const ratio = window.devicePixelRatio || 1;
+
+  canvas.width = canvas.offsetWidth * ratio;
+  canvas.height = canvas.offsetHeight * ratio;
+
+  ctx.scale(ratio, ratio);
   initRangeSliders();
 }
 
 resizeCanvas();
+
 window.addEventListener("resize", resizeCanvas);
 
 canvas.addEventListener("mousedown", () => (drawing = true));
@@ -817,6 +848,56 @@ function draw(e) {
   lastX = x;
   lastY = y;
 }
+
+// ===== TOUCH SUPPORT (MOBILE FIX) =====
+
+canvas.addEventListener("touchstart", (e) => {
+  e.preventDefault();
+
+  const rect = canvas.getBoundingClientRect();
+  const touch = e.touches[0];
+
+  lastX = touch.clientX - rect.left;
+  lastY = touch.clientY - rect.top;
+
+  drawing = true;
+});
+
+canvas.addEventListener("touchmove", (e) => {
+  if (!drawing) return;
+
+  e.preventDefault();
+
+  const rect = canvas.getBoundingClientRect();
+  const touch = e.touches[0];
+
+  const x = touch.clientX - rect.left;
+  const y = touch.clientY - rect.top;
+
+  ctx.lineWidth = brushSize.value;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+
+  if (eraseMode) {
+    ctx.globalCompositeOperation = "destination-out";
+  } else {
+    ctx.globalCompositeOperation = "source-over";
+    ctx.strokeStyle = colorPicker.value;
+  }
+
+  ctx.beginPath();
+  ctx.moveTo(lastX, lastY);
+  ctx.lineTo(x, y);
+  ctx.stroke();
+
+  lastX = x;
+  lastY = y;
+});
+
+canvas.addEventListener("touchend", () => {
+  drawing = false;
+  ctx.beginPath();
+});
 
 /* ERASER */
 

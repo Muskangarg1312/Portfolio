@@ -636,12 +636,12 @@ body.dark .projects-subtitle {
   }
 
   /* mobile images */
-  .mobile-images {
+  /* .mobile-images {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
     margin-top: 15px;
-  }
+  } */
 
   .mobile-images img {
     width: 100%;
@@ -651,8 +651,35 @@ body.dark .projects-subtitle {
   .mobile-images img:nth-child(3) {
     grid-column: span 2;
   }
-}
 
+  /* ===== SWIPER ===== */
+
+  .mobile-images {
+    display: block;
+    margin-top: 15px;
+  }
+
+  .swiper {
+    width: 100%;
+  }
+
+  .swiper-slide img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 14px;
+  }
+
+  /* pagination dots */
+  .swiper-pagination-bullet {
+    background: #ccc;
+    opacity: 1;
+  }
+
+  .swiper-pagination-bullet-active {
+    background: #6c63ff;
+  }
+}
 /* TECH TAGS */
 
 .tech span {
@@ -1020,6 +1047,7 @@ body.dark .cursor {
   .about-wrapper {
     flex-direction: column; /* remove flex side by side */
     gap: 50px;
+    margin-bottom: unset;
   }
 
   .about-text h2 {
@@ -1940,6 +1968,7 @@ input[type="range"]::-moz-range-thumb {
   height: 100%;
   border-radius: 10px;
   background: rgba(255, 255, 255, 1);
+  touch-action: none;
 }
 
 .dark #drawCanvas {
@@ -2146,6 +2175,17 @@ input[type="range"]::-moz-range-thumb {
 }
 
 @media (max-width: 768px) {
+  .popup-box {
+    width: 100%;
+    max-width: 85%;
+    padding: 10px;
+  }
+
+  .color {
+    font-size: 7px;
+    padding: 5px;
+    font-weight: 600;
+  }
   .canvas-toolbar input[type="range"] {
     width: 235px;
   }
@@ -2154,10 +2194,20 @@ input[type="range"]::-moz-range-thumb {
     font-size: 28px;
     margin-bottom: 10px;
   }
-}
 
-canvas-toolbar input[type="range"] {
-  width: 235px;
+  .palette {
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+    gap: 5px;
+    margin-top: 10px;
+  }
+
+  .code {
+    font-size: 10px;
+  }
+
+  canvas-toolbar input[type="range"] {
+    width: 235px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -2166,6 +2216,7 @@ canvas-toolbar input[type="range"] {
   }
   .creative-lab {
     padding: 50px 20px;
+    padding-bottom: 0px;
   }
 
   .lab-grid {

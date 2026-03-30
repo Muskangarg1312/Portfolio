@@ -14,6 +14,10 @@
       href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
     <script type="module" src="comment.js"></script>
@@ -139,6 +143,7 @@
         </div>
       </div>
     </section>
+
     <div class="marquee-section">
       <div class="marquee-strip">
         <div class="marquee-track">
@@ -188,163 +193,6 @@
         </div>
       </div>
     </div>
-    <section id="skills" class="skills-section">
-      <canvas id="network"></canvas>
-    </section>
-
-    <section class="projects">
-      <div class="projects-sticky">
-        <div class="projects-wrapper">
-          <!-- LEFT -->
-          <div class="projects-left">
-            <!-- PROJECT 1 -->
-            <div class="project active">
-              <h2>Rune AI</h2>
-              <p>
-                Rune AI featuring powerful RAG system with multiple AI models
-                and deep research capabilities.
-              </p>
-
-              <ul class="features">
-                <li>⚡ Fast AI models</li>
-                <li>🧠 Thinking model</li>
-                <li>🚀 Pro deep analysis</li>
-              </ul>
-
-              <div class="tech">
-                <span>Next.js</span>
-                <span>Tailwind</span>
-                <span>Framer Motion</span>
-              </div>
-
-              <!-- MOBILE IMAGES -->
-              <div class="mobile-images">
-                <img src="https://picsum.photos/300/400?random=1" />
-                <img src="https://picsum.photos/300/400?random=2" />
-                <img src="https://picsum.photos/800/1000?random=3" />
-              </div>
-            </div>
-
-            <!-- PROJECT 2 -->
-            <div class="project">
-              <h2>Finance Dashboard</h2>
-              <p>
-                Smart financial analytics dashboard for tracking investments and
-                revenue insights.
-              </p>
-
-              <ul class="features">
-                <li>📊 Data insights</li>
-                <li>💰 Investment tracking</li>
-                <li>📈 Smart charts</li>
-              </ul>
-
-              <div class="tech">
-                <span>React</span>
-                <span>D3.js</span>
-                <span>Node</span>
-              </div>
-
-              <div class="mobile-images">
-                <img src="https://picsum.photos/300/400?random=4" />
-                <img src="https://picsum.photos/300/400?random=5" />
-                <img src="https://picsum.photos/800/1000?random=6" />
-              </div>
-            </div>
-
-            <!-- PROJECT 3 -->
-            <div class="project">
-              <h2>Ecommerce Platform</h2>
-              <p>
-                Complete ecommerce system with product management, payments and
-                analytics.
-              </p>
-
-              <ul class="features">
-                <li>🛒 Product system</li>
-                <li>💳 Secure payments</li>
-                <li>📦 Inventory tracking</li>
-              </ul>
-
-              <div class="tech">
-                <span>Next.js</span>
-                <span>Stripe</span>
-                <span>MongoDB</span>
-              </div>
-
-              <div class="mobile-images">
-                <img src="https://picsum.photos/300/400?random=7" />
-                <img src="https://picsum.photos/300/400?random=8" />
-                <img src="https://picsum.photos/800/1000?random=9" />
-              </div>
-            </div>
-
-            <!-- PROJECT 4 -->
-            <div class="project">
-              <h2>Portfolio V2</h2>
-              <p>
-                Modern developer portfolio featuring smooth animations and
-                premium UI.
-              </p>
-
-              <ul class="features">
-                <li>🎨 Premium UI</li>
-                <li>⚡ Smooth animations</li>
-                <li>📱 Fully responsive</li>
-              </ul>
-
-              <div class="tech">
-                <span>HTML</span>
-                <span>GSAP</span>
-                <span>Three.js</span>
-              </div>
-
-              <div class="mobile-images">
-                <img src="https://picsum.photos/300/400?random=10" />
-                <img src="https://picsum.photos/300/400?random=11" />
-                <img src="https://picsum.photos/800/1000?random=12" />
-              </div>
-            </div>
-          </div>
-
-          <!-- TIMELINE -->
-          <div class="timeline">
-            <div class="timeline-line"></div>
-            <div class="timeline-progress"></div>
-            <div class="timeline-indicator">
-              <img src="profile.png" />
-            </div>
-          </div>
-
-          <!-- RIGHT (DESKTOP IMAGES) -->
-          <div class="projects-right">
-            <div class="images active">
-              <img src="https://picsum.photos/300/400?random=1" />
-              <img src="https://picsum.photos/300/400?random=2" />
-              <img src="https://picsum.photos/800/1000?random=3" />
-            </div>
-
-            <div class="images">
-              <img src="https://picsum.photos/300/400?random=4" />
-              <img src="https://picsum.photos/300/400?random=5" />
-              <img src="https://picsum.photos/800/1000?random=6" />
-            </div>
-
-            <div class="images">
-              <img src="https://picsum.photos/300/400?random=7" />
-              <img src="https://picsum.photos/300/400?random=8" />
-              <img src="https://picsum.photos/800/1000?random=9" />
-            </div>
-
-            <div class="images">
-              <img src="https://picsum.photos/300/400?random=10" />
-              <img src="https://picsum.photos/300/400?random=11" />
-              <img src="https://picsum.photos/800/1000?random=12" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <section class="creative-lab">
       <div class="lab-container">
@@ -525,6 +373,224 @@
       </div>
     </section>
 
+    <section id="skills" class="skills-section">
+      <canvas id="network"></canvas>
+    </section>
+
+    <section class="projects">
+      <div class="projects-sticky">
+        <div class="projects-wrapper">
+          <!-- LEFT -->
+          <div class="projects-left">
+            <!-- PROJECT 1 -->
+            <div class="project active">
+              <h2>Rune AI</h2>
+              <p>
+                Rune AI featuring powerful RAG system with multiple AI models
+                and deep research capabilities.
+              </p>
+
+              <ul class="features">
+                <li>⚡ Fast AI models</li>
+                <li>🧠 Thinking model</li>
+                <li>🚀 Pro deep analysis</li>
+              </ul>
+
+              <div class="tech">
+                <span>Next.js</span>
+                <span>Tailwind</span>
+                <span>Framer Motion</span>
+              </div>
+
+              <!-- MOBILE IMAGES -->
+              <div class="mobile-images">
+                <div class="swiper mySwiper">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                      <img src="https://picsum.photos/300/400?random=1" />
+                    </div>
+
+                    <div class="swiper-slide">
+                      <img src="https://picsum.photos/300/400?random=2" />
+                    </div>
+
+                    <div class="swiper-slide">
+                      <img src="https://picsum.photos/800/1000?random=3" />
+                    </div>
+                  </div>
+
+                  <!-- dots -->
+                  <div class="swiper-pagination"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PROJECT 2 -->
+            <div class="project">
+              <h2>Finance Dashboard</h2>
+              <p>
+                Smart financial analytics dashboard for tracking investments and
+                revenue insights.
+              </p>
+
+              <ul class="features">
+                <li>📊 Data insights</li>
+                <li>💰 Investment tracking</li>
+                <li>📈 Smart charts</li>
+              </ul>
+
+              <div class="tech">
+                <span>React</span>
+                <span>D3.js</span>
+                <span>Node</span>
+              </div>
+
+              <div class="mobile-images">
+                <div class="swiper mySwiper">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                      <img src="https://picsum.photos/300/400?random=4" />
+                    </div>
+
+                    <div class="swiper-slide">
+                      <img src="https://picsum.photos/300/400?random=5" />
+                    </div>
+
+                    <div class="swiper-slide">
+                      <img src="https://picsum.photos/800/1000?random=6" />
+                    </div>
+                  </div>
+
+                  <!-- dots -->
+                  <div class="swiper-pagination"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PROJECT 3 -->
+            <div class="project">
+              <h2>Ecommerce Platform</h2>
+              <p>
+                Complete ecommerce system with product management, payments and
+                analytics.
+              </p>
+
+              <ul class="features">
+                <li>🛒 Product system</li>
+                <li>💳 Secure payments</li>
+                <li>📦 Inventory tracking</li>
+              </ul>
+
+              <div class="tech">
+                <span>Next.js</span>
+                <span>Stripe</span>
+                <span>MongoDB</span>
+              </div>
+
+              <div class="mobile-images">
+                <div class="swiper mySwiper">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                      <img src="https://picsum.photos/300/400?random=7" />
+                    </div>
+
+                    <div class="swiper-slide">
+                      <img src="https://picsum.photos/300/400?random=8" />
+                    </div>
+
+                    <div class="swiper-slide">
+                      <img src="https://picsum.photos/800/1000?random=9" />
+                    </div>
+                  </div>
+
+                  <!-- dots -->
+                  <div class="swiper-pagination"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- PROJECT 4 -->
+            <div class="project">
+              <h2>Portfolio V2</h2>
+              <p>
+                Modern developer portfolio featuring smooth animations and
+                premium UI.
+              </p>
+
+              <ul class="features">
+                <li>🎨 Premium UI</li>
+                <li>⚡ Smooth animations</li>
+                <li>📱 Fully responsive</li>
+              </ul>
+
+              <div class="tech">
+                <span>HTML</span>
+                <span>GSAP</span>
+                <span>Three.js</span>
+              </div>
+
+              <div class="mobile-images">
+                <div class="swiper mySwiper">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                      <img src="https://picsum.photos/300/400?random=10" />
+                    </div>
+
+                    <div class="swiper-slide">
+                      <img src="https://picsum.photos/300/400?random=11" />
+                    </div>
+
+                    <div class="swiper-slide">
+                      <img src="https://picsum.photos/800/1000?random=12" />
+                    </div>
+                  </div>
+
+                  <!-- dots -->
+                  <div class="swiper-pagination"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TIMELINE -->
+          <div class="timeline">
+            <div class="timeline-line"></div>
+            <div class="timeline-progress"></div>
+            <div class="timeline-indicator">
+              <img src="profile.png" />
+            </div>
+          </div>
+
+          <!-- RIGHT (DESKTOP IMAGES) -->
+          <div class="projects-right">
+            <div class="images active">
+              <img src="https://picsum.photos/300/400?random=1" />
+              <img src="https://picsum.photos/300/400?random=2" />
+              <img src="https://picsum.photos/800/1000?random=3" />
+            </div>
+
+            <div class="images">
+              <img src="https://picsum.photos/300/400?random=4" />
+              <img src="https://picsum.photos/300/400?random=5" />
+              <img src="https://picsum.photos/800/1000?random=6" />
+            </div>
+
+            <div class="images">
+              <img src="https://picsum.photos/300/400?random=7" />
+              <img src="https://picsum.photos/300/400?random=8" />
+              <img src="https://picsum.photos/800/1000?random=9" />
+            </div>
+
+            <div class="images">
+              <img src="https://picsum.photos/300/400?random=10" />
+              <img src="https://picsum.photos/300/400?random=11" />
+              <img src="https://picsum.photos/800/1000?random=12" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
