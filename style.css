@@ -470,6 +470,43 @@ body.dark .projects-subtitle {
   display: none;
 }
 
+/* ================= MOBILE ONLY ================= */
+@media (max-width: 768px) {
+  .marquee-section {
+    display: none;
+  }
+
+  .marquee-mobile-section {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    background: linear-gradient(90deg, #6c63ff, #ff4ecd, #00d4ff);
+    padding: 12px 0;
+  }
+
+  .marquee-mobile-track {
+    display: flex;
+    white-space: nowrap;
+    gap: 40px;
+    animation: mobileScroll 12s linear infinite;
+  }
+
+  .marquee-mobile-track span {
+    font-size: 14px;
+    color: white;
+    letter-spacing: 0.08em;
+  }
+}
+
+/* ===== MOBILE ANIMATION ===== */
+@keyframes mobileScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
 /* ===== ANIMATION ===== */
 
 @keyframes scroll {
@@ -548,6 +585,72 @@ body.dark .projects-subtitle {
 
 .project li {
   margin-bottom: 6px;
+}
+
+.mobile-images {
+  display: none;
+}
+
+/* ================= MOBILE FIX ================= */
+@media (max-width: 768px) {
+  .projects {
+    height: auto;
+    padding: 40px 20px;
+  }
+
+  .projects-sticky {
+    position: relative;
+    height: auto;
+  }
+
+  .projects-wrapper {
+    display: block;
+  }
+
+  /* hide timeline */
+  .timeline {
+    display: none !important;
+  }
+
+  /* fix project layout */
+  .projects-left {
+    position: static;
+    height: auto;
+    padding: 0px;
+  }
+
+  .project {
+    position: relative;
+    opacity: 1 !important;
+    transform: none !important;
+    margin-bottom: 40px;
+    background: #fff;
+    padding: 18px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  }
+
+  /* hide desktop images */
+  .projects-right {
+    display: none;
+  }
+
+  /* mobile images */
+  .mobile-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  .mobile-images img {
+    width: 100%;
+    border-radius: 12px;
+  }
+
+  .mobile-images img:nth-child(3) {
+    grid-column: span 2;
+  }
 }
 
 /* TECH TAGS */
@@ -888,6 +991,11 @@ body.dark .cursor {
     display: flex;
     /* flex-direction: column; */
     gap: 15px;
+  }
+
+  .primary {
+    margin-right: 0px;
+    padding: 0px;
   }
 
   .primary,
@@ -1262,6 +1370,8 @@ body.dark .more {
   border-radius: 10px;
   backdrop-filter: blur(10px);
   width: 100%;
+  flex-wrap: wrap;
+  flex-direction: row;
 }
 
 .dark .canvas-toolbar {
@@ -2017,15 +2127,24 @@ input[type="range"]::-moz-range-thumb {
     display: flex;
     flex-direction: column;
   }
-
-  .comment-card {
-    grid-column: span 2;
-  }
 }
 
 @media (max-width: 600px) {
+  .canvas-toolbar input[type="range"] {
+    width: 235px;
+  }
+}
+
+canvas-toolbar input[type="range"] {
+  width: 235px;
+}
+
+@media (max-width: 600px) {
+  .lab-card {
+    padding: 15px;
+  }
   .creative-lab {
-    padding: 80px 30px;
+    padding: 50px 20px;
   }
 
   .lab-grid {

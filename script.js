@@ -153,30 +153,6 @@ function animateBackground() {
 
 animateBackground();
 
-function initRangeSliders() {
-  const sliders = document.querySelectorAll('input[type="range"]');
-
-  sliders.forEach((slider) => {
-    const update = () => {
-      const value =
-        ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
-
-      slider.style.background = `
-        linear-gradient(
-          to right,
-          #6c63ff, 
-          #ff4ecd,
-          #e0e0e0 ${value}%,
-          #e0e0e0 100%
-        )
-      `;
-    };
-
-    slider.addEventListener("input", update);
-    update(); // initial fill
-  });
-}
-
 // ================= PREMIUM SKILLS NETWORK =================
 document.addEventListener("DOMContentLoaded", function () {
   const canvas = document.getElementById("network");
@@ -512,6 +488,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
   animateSkills();
 });
+
+function initRangeSliders() {
+  const sliders = document.querySelectorAll('input[type="range"]');
+
+  sliders.forEach((slider) => {
+    const update = () => {
+      const value =
+        ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+
+      slider.style.background = `
+        linear-gradient(
+          to right,
+          #6c63ff, 
+          #ff4ecd,
+          #e0e0e0 ${value}%,
+          #e0e0e0 100%
+        )
+      `;
+    };
+
+    slider.addEventListener("input", update);
+    update(); // initial fill
+  });
+}
 
 const projects = document.querySelectorAll(".project");
 const images = document.querySelectorAll(".images");
