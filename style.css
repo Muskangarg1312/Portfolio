@@ -656,10 +656,10 @@ body.dark .projects-subtitle {
 /* TECH TAGS */
 
 .tech span {
-  padding: 6px 14px;
+  padding: 5px 10px;
   border: 1px solid #ddd;
   border-radius: 20px;
-  font-size: 13px;
+  font-size: 12px;
   margin-right: 6px;
   background: rgba(255, 255, 255, 0.6);
 }
@@ -1030,8 +1030,9 @@ body.dark .cursor {
     font-size: 16px;
   }
 
-  .about-text p {
-    font-size: 14px;
+  p,
+  li {
+    font-size: 14px !important;
   }
 
   /* Stack highlight cards */
@@ -1225,7 +1226,7 @@ body.dark .cursor {
 
 /* LOCATION */
 .location-line {
-  font-size: 13px;
+  font-size: 12px;
   opacity: 0.6;
 }
 
@@ -1245,7 +1246,22 @@ body.dark .cursor {
 
 .spotify-card {
   grid-area: music;
-  align-items: stretch;
+  width: 100%;
+  max-width: 400px; /* optional */
+  margin: auto;
+}
+
+.spotify-card iframe {
+  width: 100%;
+  height: 380px;
+  border-radius: 16px;
+}
+
+/* Mobile fix */
+@media (max-width: 768px) {
+  .spotify-card iframe {
+    /* height: 300px; */
+  }
 }
 
 /* MUSIC TITLE */
@@ -1266,11 +1282,11 @@ body.dark .cursor {
 }
 
 .categories button {
-  padding: 6px 12px;
+  padding: 5px 10px;
   border: 1px solid #ddd;
   border-radius: 20px;
-  font-size: 13px;
-  margin-right: 6px;
+  font-size: 12px;
+  /* margin-right: 6px; */
   background: rgba(255, 255, 255, 0.6);
   cursor: pointer;
   transition: 0.3s;
@@ -1381,10 +1397,10 @@ body.dark .more {
 /* buttons */
 
 .canvas-toolbar button {
-  padding: 6px 12px;
+  padding: 5px 10px;
   border: 1px solid #ddd;
   border-radius: 20px;
-  font-size: 13px;
+  font-size: 12px;
   background: rgba(255, 255, 255, 0.6);
   cursor: pointer;
   transition: 0.3s;
@@ -1701,7 +1717,7 @@ input[type="range"]::-moz-range-thumb {
 
 /* CODE */
 .code {
-  font-size: 13px;
+  font-size: 12px;
   margin-bottom: 10px;
 }
 
@@ -2129,9 +2145,14 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .canvas-toolbar input[type="range"] {
     width: 235px;
+  }
+
+  .project h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
   }
 }
 
@@ -2141,7 +2162,7 @@ canvas-toolbar input[type="range"] {
 
 @media (max-width: 600px) {
   .lab-card {
-    padding: 15px;
+    padding: 10px;
   }
   .creative-lab {
     padding: 50px 20px;
