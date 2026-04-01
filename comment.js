@@ -66,9 +66,9 @@ onSnapshot(q, (snapshot) => {
         </div>
       </div>
 
-      <button class="delete-btn" onclick="deleteComment('${docSnap.id}', this)">
+     <!-- <button class="delete-btn" onclick="deleteComment('${docSnap.id}', this)">
         Delete
-      </button>
+      </button> -->
     `;
 
     list.appendChild(div);
@@ -122,4 +122,37 @@ window.openComments = function () {
 
 window.closeComments = function () {
   document.getElementById("commentModal").classList.remove("active");
+};
+
+// CONTACT FORM
+
+const sendBtn = document.getElementById("sendBtn");
+
+sendBtn.onclick = async () => {
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const message = document.getElementById("message").value.trim();
+
+  if (!name || !email || !message) {
+    showToast("⚠️ Fill all fields");
+    return;
+  }
+
+  try {
+    await addDoc(collection(db, "contacts"), {
+      name,
+      email,
+      message,
+      time: new Date(),
+    });
+
+    showToast("✅ Message sent");
+
+    // clear form
+    document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("message").value = "";
+  } catch (e) {
+    showToast("❌ Failed to send");
+  }
 };

@@ -1,3 +1,11 @@
+window.addEventListener("load", () => {
+  const loader = document.getElementById("preloader");
+
+  setTimeout(() => {
+    loader.classList.add("hide");
+  }, 800); // delay for smooth feel
+});
+
 // ================= GLOBAL MOUSE =================
 let mouse = { x: 0, y: 0 };
 let disableParticles = false;
@@ -152,6 +160,42 @@ function animateBackground() {
 }
 
 animateBackground();
+
+// =======   SCROLL BUTTTONS ============
+
+const topBtn = document.getElementById("scrollTopBtn");
+const bottomBtn = document.getElementById("scrollBottomBtn");
+
+// SHOW/HIDE BUTTONS
+window.addEventListener("scroll", () => {
+  const scrollY = window.scrollY;
+  const height = document.documentElement.scrollHeight - window.innerHeight;
+
+  if (scrollY > 300) {
+    topBtn.classList.add("show");
+  } else {
+    topBtn.classList.remove("show");
+  }
+
+  if (scrollY < height - 300) {
+    bottomBtn.classList.add("show");
+  } else {
+    bottomBtn.classList.remove("show");
+  }
+});
+
+// SCROLL TOP
+topBtn.onclick = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+// SCROLL BOTTOM
+bottomBtn.onclick = () => {
+  window.scrollTo({
+    top: document.documentElement.scrollHeight,
+    behavior: "smooth",
+  });
+};
 
 // ================= PREMIUM SKILLS NETWORK =================
 document.addEventListener("DOMContentLoaded", function () {
@@ -537,16 +581,19 @@ function updateProject(index) {
 
 window.addEventListener("scroll", () => {
   const rect = section.getBoundingClientRect();
-  const sectionHeight = section.offsetHeight - window.innerHeight;
+  const sectionHeight = section.scrollHeight - window.innerHeight;
 
-  if (rect.top <= 0 && rect.bottom >= window.innerHeight) {
+  // ✅ ONLY RUN INSIDE PROJECT SECTION
+  if (rect.top <= 0 && rect.bottom > window.innerHeight) {
     let progress = Math.abs(rect.top) / sectionHeight;
-
     let index = Math.floor(progress * total);
 
     if (index >= total) index = total - 1;
 
     updateProject(index);
+  } else {
+    // ✅ STOP PROJECT CONTROL OUTSIDE
+    return;
   }
 });
 
@@ -1262,3 +1309,83 @@ border-radius: 16px;
 
   document.getElementById("glassCode").innerText = glassCSS;
 }
+
+// SELECT
+
+gsap.registerPlugin(ScrollTrigger);
+
+const cards = gsap.utils.toArray(".exp-card");
+const track = document.querySelector(".exp-track");
+
+const getScrollAmount = () => track.scrollWidth - window.innerWidth;
+
+// ✅ MAIN SCROLL (SMOOTH + SNAP)
+gsap.to(track, {
+  x: () => -getScrollAmount(),
+  ease: "none",
+  scrollTrigger: {
+    trigger: "#exp-scroll",
+    start: "top top",
+    end: () => "+=" + getScrollAmount(),
+    scrub: 0.6, // 👈 smoother (was 1 → causing lag)
+    pin: true,
+    anticipatePin: 1,
+    invalidateOnRefresh: true,
+
+    // 🔥 THIS FIXES YOUR MAIN ISSUE
+    snap: {
+      snapTo: 1 / (cards.length - 1), // 👈 1 scroll = 1 card
+      duration: 0.4,
+      ease: "power2.out",
+    },
+  },
+});
+
+// ✅ ACTIVE CARD (FIXED LOGIC)
+ScrollTrigger.create({
+  trigger: "#exp-scroll",
+  start: "top top",
+  end: () => "+=" + getScrollAmount(),
+  scrub: true,
+  onUpdate: (self) => {
+    // 🔥 use progress instead of getBoundingClientRect (NO GLITCH)
+    let index = Math.round(self.progress * (cards.length - 1));
+
+    cards.forEach((card, i) => {
+      card.classList.toggle("active", i === index);
+    });
+  },
+});
+
+// CONTACT FORM
+
+const sendBtn = document.getElementById("sendBtn");
+
+sendBtn.onclick = async () => {
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const message = document.getElementById("message").value.trim();
+
+  if (!name || !email || !message) {
+    showToast("⚠️ Fill all fields");
+    return;
+  }
+
+  try {
+    await addDoc(collection(db, "contacts"), {
+      name,
+      email,
+      message,
+      time: new Date(),
+    });
+
+    showToast("✅ Message sent");
+
+    // clear form
+    document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("message").value = "";
+  } catch (e) {
+    showToast("❌ Failed to send");
+  }
+};

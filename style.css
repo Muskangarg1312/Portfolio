@@ -15,6 +15,8 @@ body {
   background: linear-gradient(135deg, #f5f7ff, #f0f0ff);
   overflow-x: hidden;
   position: relative;
+  scroll-behavior: smooth;
+  cursor: url("cursor.png"), pointer;
 }
 
 /* floating gradient glow */
@@ -61,7 +63,146 @@ body::after {
   }
 }
 
+button {
+  font-family: "Poppins", sans-serif;
+}
+
+/* PRELOADER WRAPPER */
+#preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #0a0a0a; /* or remove if you want theme auto */
+  transition:
+    opacity 0.5s ease,
+    visibility 0.5s;
+}
+
+/* HIDE */
+#preloader.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* YOUR BLOB */
+.blob {
+  width: 150px;
+  height: 150px;
+  background: linear-gradient(45deg, #6c63ff, #ff4ecd, #00d4ff);
+  border-radius: 50%;
+  animation:
+    blob-morph 2.4s ease-in-out infinite,
+    moveGradient 6s infinite linear;
+  background-size: 300%;
+  box-shadow: 0 0 50px rgba(255, 60, 111, 0.4);
+}
+
+@keyframes blob-morph {
+  0%,
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    transform: rotate(0deg);
+  }
+  25% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+  50% {
+    border-radius: 50% 40% 60% 50% / 40% 60% 40% 60%;
+    transform: rotate(180deg);
+  }
+  75% {
+    border-radius: 70% 30% 40% 60% / 30% 40% 70% 50%;
+  }
+}
+
 /* ===== SCROLL BUTTON ===== */
+
+.scroll-btn {
+  position: fixed;
+  right: 25px;
+  z-index: 999;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  background: #6c63ff;
+  backdrop-filter: blur(18px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.35s ease;
+  opacity: 0;
+  pointer-events: none;
+  /* glow effect */
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* ICON */
+.scroll-btn svg {
+  width: 26px;
+  height: 26px;
+  stroke: white;
+  stroke-width: 2.5;
+  fill: none;
+  transition: 0.3s;
+}
+
+/* positions */
+.scroll-btn.top {
+  bottom: 100px;
+}
+.scroll-btn.bottom {
+  bottom: 25px;
+}
+
+/* show */
+.scroll-btn.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* HOVER = YOUR THEME */
+.scroll-btn:hover {
+  transform: translateY(-5px) scale(1.08);
+
+  background: linear-gradient(45deg, #6c63ff, #ff4ecd, #00d4ff);
+
+  box-shadow:
+    0 20px 40px rgba(108, 99, 255, 0.35),
+    0 0 25px rgba(255, 78, 205, 0.25);
+
+  animation: moveGradient 6s infinite linear;
+  background-size: 300%;
+}
+
+/* hover icon animation */
+.scroll-btn:hover svg {
+  transform: scale(1.15);
+}
+
+.scroll-btn.show {
+  animation: pulseGlow 2.5s infinite;
+}
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 rgba(108, 99, 255, 0);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(108, 99, 255, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(108, 99, 255, 0);
+  }
+}
 
 .scroll-down {
   position: absolute;
@@ -320,10 +461,13 @@ body.dark .projects-subtitle {
 
 @keyframes moveGradient {
   0% {
-    background-position: 0%;
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
   }
   100% {
-    background-position: 300%;
+    background-position: 0% 50%;
   }
 }
 
@@ -525,6 +669,7 @@ body.dark .projects-subtitle {
   height: 400vh;
   padding: 0 80px;
   position: relative;
+  z-index: 1;
 }
 
 .projects-sticky {
@@ -1281,14 +1426,14 @@ body.dark .cursor {
 
 .spotify-card iframe {
   width: 100%;
-  height: 380px;
+  height: 450px;
   border-radius: 16px;
 }
 
 /* Mobile fix */
 @media (max-width: 768px) {
   .spotify-card iframe {
-    /* height: 300px; */
+    height: 360px;
   }
 }
 
@@ -1828,6 +1973,7 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 10px;
   padding: 10px;
   resize: vertical;
+  font-family: "Poppins", sans-serif;
 }
 
 /* ================= CLOCK ================= */
@@ -1965,7 +2111,7 @@ input[type="range"]::-moz-range-thumb {
 #drawCanvas {
   /* align-items: stretch; */
   width: 100%;
-  height: 100%;
+  height: 150px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 1);
   touch-action: none;
@@ -2096,7 +2242,7 @@ input[type="range"]::-moz-range-thumb {
 /* COMMENT CARD */
 .comment-item {
   padding: 18px;
-  text-align: center;
+  /* text-align: center; */
   border-radius: 10px;
   cursor: pointer;
   background: rgba(255, 255, 255, 1);
@@ -2164,6 +2310,213 @@ input[type="range"]::-moz-range-thumb {
   transition: 0.3s ease;
 }
 
+/* EXPERIENCE */
+
+/* MAIN SECTION */
+.exp-section {
+  padding-top: 80px;
+  /* position: relative; */
+  z-index: 2;
+}
+
+/* HEADING */
+.exp-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.exp-header h2 {
+  font-size: 45px;
+  margin-bottom: 20px;
+}
+
+.exp-header p {
+  color: #777;
+  margin-top: 10px;
+}
+
+/* SCROLL SECTION */
+#exp-scroll {
+  height: 100vh;
+  position: relative;
+}
+
+/* WRAPPER */
+.exp-wrapper {
+  display: flex;
+  align-items: center;
+  padding-top: 80px;
+  /* height: 80vh; */
+  overflow: hidden;
+  /* position: relative; */
+}
+
+/* TRACK */
+.exp-track {
+  display: flex;
+  gap: 40px;
+  padding: 0 10vw;
+}
+
+/* CARD */
+.exp-card {
+  min-width: 75vw;
+  height: 380px;
+  opacity: 0.3;
+  backdrop-filter: blur(10px);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 0.05)
+  );
+  padding: 25px;
+  border-radius: 20px;
+  border: 1px solid rgba(108, 99, 255, 0.5);
+  transition: 0.4s ease;
+  /* min-height: 160px; */
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  box-shadow:
+    inset rgb(247 247 247 / 25%) 0px 0px 5px 1px,
+    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
+
+/* ACTIVE */
+.exp-card.active {
+  opacity: 1;
+  border: 1px solid rgba(108, 99, 255, 0.8);
+}
+
+/* TEXT */
+.exp-card h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.exp-card p {
+  color: #666;
+}
+
+/* CONTACT */
+
+.contact-section {
+  padding: 100px 80px;
+  position: relative;
+}
+
+.contact-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.contact-header h2 {
+  font-size: 48px;
+  margin-bottom: 20px;
+  /* background: linear-gradient(90deg, #6c63ff, #ff4ecd, #00d4ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; */
+}
+
+.contact-header p {
+  color: #777;
+}
+
+/* LAYOUT */
+.contact-wrapper {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  gap: 50px;
+  align-items: center;
+}
+
+/* LEFT */
+.contact-info h3 {
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+.contact-info p {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.contact-links a {
+  display: block;
+  margin-bottom: 10px;
+  color: #6c63ff;
+  text-decoration: none;
+}
+
+/* FORM */
+.contact-form {
+  backdrop-filter: blur(10px);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 0.05)
+  );
+  padding: 25px;
+  border-radius: 20px;
+  border: 1px solid rgb(255 255 255 / 70%);
+  transition: 0.4s ease;
+  align-items: center;
+  box-shadow:
+    inset rgb(247 247 247 / 25%) 0px 0px 5px 1px,
+    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  outline: none;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+}
+
+.contact-form textarea {
+  min-height: 120px;
+  resize: none;
+}
+
+.contact-form button {
+  width: 160px;
+}
+
+/* FOOTER */
+
+.footer {
+  padding: 60px 20px 20px;
+  text-align: center;
+}
+
+.footer-content h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.footer-content p {
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.footer-socials a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #6c63ff;
+}
+
+.footer-bottom {
+  margin-top: 30px;
+  font-size: 13px;
+  color: #999;
+}
+
 /* ================= RESPONSIVE ================= */
 
 @media (max-width: 1000px) {
@@ -2175,7 +2528,24 @@ input[type="range"]::-moz-range-thumb {
 }
 
 @media (max-width: 768px) {
+  .scroll-btn {
+    width: 30px;
+    height: 30px;
+    right: 10px;
+  }
+
+  .scroll-btn.top {
+    bottom: 70px;
+  }
+
+  .scroll-btn svg {
+    width: 20px;
+    height: 20px;
+  }
   .popup-box {
+    .scroll-btn.top {
+      bottom: 70px;
+    }
     width: 100%;
     max-width: 85%;
     padding: 10px;
