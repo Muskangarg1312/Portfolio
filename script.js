@@ -1397,3 +1397,9 @@ function mobileActiveCards() {
 if (window.innerWidth <= 768) {
   mobileActiveCards();
 }
+
+// Dynamic Year
+document.getElementById("year").textContent = new Date().getFullYear();
+
+// Lucide Icons Init
+lucide.createIcons();

@@ -14,6 +14,11 @@
       href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap"
       rel="stylesheet"
     />
+    <!-- FONT AWESOME (for icons) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
@@ -37,11 +42,17 @@
 
     <!-- NAVBAR -->
     <header>
-      <div class="logo">Muskan<span>.</span></div>
+      <a href="#" style="text-decoration: none">
+        <div class="logo">Muskan<span>.</span></div>
+      </a>
+
       <nav>
-        <a href="#">Work</a>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
+        <a href="#">Home</a>
+        <a href="#about">About</a>
+        <a href="#creative">Creative Lab</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
         <button id="themeToggle" class="theme-btn">☀️</button>
       </nav>
     </header>
@@ -91,8 +102,12 @@
         </p>
 
         <div class="buttons">
-          <button class="primary">View Work</button>
-          <button class="secondary">Contact Me</button>
+          <a href="MuskanCV_Mar2026.pdf" download="Muskan_Garg_CV.pdf">
+            <button class="primary">Download CV</button>
+          </a>
+          <a href="#contact">
+            <button class="secondary">Contact Me</button>
+          </a>
         </div>
       </div>
 
@@ -203,7 +218,7 @@
       </div>
     </div>
 
-    <section class="creative-lab">
+    <section class="creative-lab" id="creative">
       <div class="lab-container">
         <div class="lab-header">
           <h2>Creative Lab</h2>
@@ -382,11 +397,11 @@
       </div>
     </section>
 
-    <section id="skills" class="skills-section">
+    <section class="skills-section" id="skills">
       <canvas id="network"></canvas>
     </section>
 
-    <section class="projects">
+    <section class="projects" id="projects">
       <div class="projects-sticky">
         <div class="projects-wrapper">
           <!-- LEFT -->
@@ -401,7 +416,7 @@
                 experience with secure functionality.
               </p>
 
-              <ul class="features">
+              <ul>
                 <li>🎫 Easy Booking</li>
                 <li>🔍 Smart Search</li>
                 <li>⚡ Live Seats</li>
@@ -447,7 +462,7 @@
                 navigation, and responsive layout.
               </p>
 
-              <ul class="features">
+              <ul>
                 <li>🧭 Smooth Navigation</li>
                 <li>📱 Responsive Design</li>
                 <li>🛒 Easy Shopping</li>
@@ -491,7 +506,7 @@
                 all devices.
               </p>
 
-              <ul class="features">
+              <ul>
                 <li>💎 Elegant UI</li>
                 <li>🛍️ Online Store</li>
                 <li>⚡ Fast Performance</li>
@@ -537,7 +552,7 @@
                 with an organized interface and efficient backend operations.
               </p>
 
-              <ul class="features">
+              <ul>
                 <li>📊 Data Management</li>
                 <li>🔐 Secure Access</li>
                 <li>⚡ Fast Processing</li>
@@ -613,7 +628,7 @@
     </section>
 
     <!-- EXPERIENCE SECTION -->
-    <section class="exp-section">
+    <section class="exp-section" id="experience">
       <!-- HEADING (NORMAL FLOW) -->
       <div class="exp-header">
         <h2>My Experience</h2>
@@ -716,13 +731,28 @@
       <div class="contact-wrapper">
         <!-- LEFT INFO -->
         <div class="contact-info">
-          <h3>Let’s Talk</h3>
-          <p>Have a project, idea, or collaboration? Drop a message.</p>
+          <h3>Let’s Work Together ❤️</h3>
 
-          <div class="contact-links">
-            <a href="#">📧 gargmuskan1312@gmail.com</a>
-            <a href="#">🌐 https://www.linkedin.com/in/muskannn-garggg-</a>
-            <a href="#">💻 https://github.com/Muskangarg1312</a>
+          <p>
+            I’m currently open to freelance projects, internships, and creative
+            collaborations. If you have something exciting, let’s build it
+            together.
+          </p>
+
+          <div class="contact-highlights">
+            <div>🚀 Available for freelance</div>
+            <div>💡 Open to creative ideas</div>
+            <div>⚡ Quick response time</div>
+          </div>
+
+          <div class="contact-email">
+            <h4>Email me directly</h4>
+            <a
+              href="mailto:gargmuskan1312@gmail.com"
+              style="text-decoration: none"
+            >
+              <span>gargmuskan1312@gmail.com</span>
+            </a>
           </div>
         </div>
 
@@ -742,7 +772,7 @@
       <div class="footer-container">
         <!-- LEFT -->
         <div class="footer-left">
-          <h1 class="name">Muskan</h1>
+          <div class="logo">Muskan<span>.</span></div>
           <p>Crafting modern web experiences with creativity & precision 🚀</p>
         </div>
 
@@ -758,15 +788,35 @@
         <div class="footer-right">
           <h4>Connect</h4>
           <div class="socials">
-            <a href="#">GitHub</a>
-            <a href="#">LinkedIn</a>
-            <a href="#">Twitter</a>
+            <a
+              href="mailto:gargmuskan1312@gmail.com"
+              title="GitHub"
+              target="_blank"
+            >
+              <i class="fab fa-github"></i>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/muskannn-garggg-"
+              title="LinkedIn"
+              target="_blank"
+            >
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a
+              href="https://github.com/Muskangarg1312"
+              title="Twitter"
+              target="_blank"
+            >
+              <i class="fab fa-twitter"></i>
+            </a>
           </div>
         </div>
       </div>
 
       <!-- BOTTOM -->
-      <div class="footer-bottom">© 2026 Muskan • Designed with ❤️</div>
+      <div class="footer-bottom">
+        © <span id="year"></span> Muskan • Designed with ❤️
+      </div>
     </footer>
 
     <!-- SCROLL BUTTONS -->
@@ -781,7 +831,8 @@
         <path d="M6 9l6 6 6-6" />
       </svg>
     </button>
-
+    <!-- ICON CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="script.js"></script>
   </body>
