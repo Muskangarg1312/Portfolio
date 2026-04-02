@@ -1314,49 +1314,86 @@ border-radius: 16px;
 
 gsap.registerPlugin(ScrollTrigger);
 
-const cards = gsap.utils.toArray(".exp-card");
 const track = document.querySelector(".exp-track");
+const cards = gsap.utils.toArray(".exp-card");
 
-const getScrollAmount = () => track.scrollWidth - window.innerWidth;
+// ✅ RESPONSIVE GSAP (BEST METHOD)
+ScrollTrigger.matchMedia({
+  // 🔥 DESKTOP ONLY
+  "(min-width: 769px)": function () {
+    const scrollWidth = track.scrollWidth - window.innerWidth;
 
-gsap.to(track, {
-  x: () => -getScrollAmount(),
-  ease: "none",
-  scrollTrigger: {
-    trigger: "#exp-scroll",
-    start: "top top",
-    end: () => "+=" + getScrollAmount(),
+    gsap.to(track, {
+      x: -scrollWidth,
+      ease: "none",
+      scrollTrigger: {
+        trigger: "#exp-scroll",
+        start: "top top",
+        end: "+=" + scrollWidth,
+        scrub: 0.5,
+        pin: true, // ✅ only desktop
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
 
-    scrub: 0.3,
-    pin: true,
-    pinSpacing: true, // ✅ keep this TRUE
-    anticipatePin: 1,
-    invalidateOnRefresh: true,
+        snap: {
+          snapTo: 1 / (cards.length - 1),
+          duration: 0.3,
+        },
+      },
+    });
 
-    snap: {
-      snapTo: 1 / (cards.length - 1),
-      duration: 0.4,
-      ease: "power2.out",
-    },
+    // ACTIVE CARD
+    ScrollTrigger.create({
+      trigger: "#exp-scroll",
+      start: "top top",
+      end: "+=" + scrollWidth,
+      scrub: true,
+      onUpdate: (self) => {
+        let index = Math.round(self.progress * (cards.length - 1));
+        cards.forEach((card, i) => {
+          card.classList.toggle("active", i === index);
+        });
+      },
+    });
   },
-});
 
-ScrollTrigger.config({
-  ignoreMobileResize: true,
-});
+  // 📱 MOBILE ONLY (NO GSAP PIN)
+  "(max-width: 768px)": function () {
+    // ❌ remove transform
+    gsap.set(track, { clearProps: "all" });
 
-// ✅ ACTIVE CARD (FIXED LOGIC)
-ScrollTrigger.create({
-  trigger: "#exp-scroll",
-  start: "top top",
-  end: () => "+=" + getScrollAmount(),
-  scrub: true,
-  onUpdate: (self) => {
-    // 🔥 use progress instead of getBoundingClientRect (NO GLITCH)
-    let index = Math.round(self.progress * (cards.length - 1));
-
-    cards.forEach((card, i) => {
-      card.classList.toggle("active", i === index);
+    // ❌ kill all triggers inside section
+    ScrollTrigger.getAll().forEach((trigger) => {
+      if (trigger.trigger === document.querySelector("#exp-scroll")) {
+        trigger.kill();
+      }
     });
   },
 });
+
+// 📱 MOBILE ACTIVE CARD (NO GSAP)
+
+function mobileActiveCards() {
+  const cards = document.querySelectorAll(".exp-card");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          cards.forEach((c) => c.classList.remove("active"));
+          entry.target.classList.add("active");
+        }
+      });
+    },
+    {
+      threshold: 0.6, // 👈 60% visible = active
+    },
+  );
+
+  cards.forEach((card) => observer.observe(card));
+}
+
+// RUN ONLY ON MOBILE
+if (window.innerWidth <= 768) {
+  mobileActiveCards();
+}

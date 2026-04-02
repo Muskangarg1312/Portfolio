@@ -907,11 +907,12 @@ body.dark .projects-subtitle {
 .features {
   list-style: none;
   padding: 0;
+  align-self: flex-start;
 }
 
 .features li {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   gap: 10px;
   margin-bottom: 10px;
   font-size: 15px;
@@ -1183,12 +1184,12 @@ body.dark .cursor {
 
   .primary {
     margin-right: 0px;
-    padding: 0px;
   }
 
   .primary,
   .secondary {
     width: 100%;
+    padding: 10px;
   }
 
   /* ---------- IMAGE ---------- */
@@ -1247,7 +1248,7 @@ body.dark .cursor {
 /* SECTION */
 
 .creative-lab {
-  padding: 120px 80px;
+  padding: 60px 0px;
   position: relative;
 }
 
@@ -2331,14 +2332,14 @@ input[type="range"]::-moz-range-thumb {
 /* MAIN SECTION */
 .exp-section {
   padding-top: 80px;
-  /* position: relative; */
+  position: relative;
   z-index: 2;
 }
 
 /* HEADING */
 .exp-header {
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: -60px;
 }
 
 .exp-header h2 {
@@ -2389,10 +2390,8 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 20px;
   border: 1px solid rgba(108, 99, 255, 0.5);
   transition: 0.4s ease;
-  /* min-height: 160px; */
   display: flex;
   flex-direction: column;
-  text-align: center;
   align-items: center;
   box-shadow:
     inset rgb(247 247 247 / 25%) 0px 0px 5px 1px,
@@ -2412,7 +2411,8 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .exp-card p {
-  color: #666;
+  color: #555;
+  margin-bottom: 20px;
 }
 
 /* CONTACT */
@@ -2420,6 +2420,7 @@ input[type="range"]::-moz-range-thumb {
 .contact-section {
   padding: 0px 80px;
   position: relative;
+  margin-top: -60px;
 }
 
 .contact-header {
@@ -2436,7 +2437,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .contact-header p {
-  color: #777;
+  color: #555;
 }
 
 /* LAYOUT */
@@ -2531,7 +2532,7 @@ input[type="range"]::-moz-range-thumb {
 } */
 
 .footer-left p {
-  color: #666;
+  color: #333;
   max-width: 300px;
 }
 
@@ -2547,7 +2548,7 @@ input[type="range"]::-moz-range-thumb {
   display: block;
   margin-bottom: 8px;
   text-decoration: none;
-  color: #777;
+  color: #333;
   transition: 0.3s;
 }
 
@@ -2571,7 +2572,7 @@ input[type="range"]::-moz-range-thumb {
 
   text-align: center;
   font-size: 13px;
-  color: #999;
+  color: #333;
 }
 
 .dark .footer-left p,
@@ -2663,9 +2664,85 @@ input[type="range"]::-moz-range-thumb {
     margin-bottom: 10px;
   }
 
-  .exp-wrapper {
-    height: 70%;
+  .exp-header {
+    margin-bottom: 0px;
   }
+  #exp-scroll {
+    height: auto !important; /* 🔥 VERY IMPORTANT */
+  }
+
+  .exp-wrapper {
+    overflow: visible;
+  }
+
+  .exp-track {
+    flex-direction: column;
+    gap: 20px;
+    padding: 60px 20px;
+  }
+
+  .exp-card {
+    min-width: 100%;
+    opacity: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+    scrollbar-gutter: stable;
+  }
+  .exp-card {
+    position: relative;
+  }
+
+  .exp-card {
+    position: relative;
+  }
+
+  /* fake inner mask for clean edge */
+  .exp-card::after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    right: 4px;
+    bottom: 10px;
+    width: 6px;
+    border-radius: 20px;
+    pointer-events: none;
+
+    /* glass overlay */
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  /* fake inner mask for clean edge */
+  .exp-card::after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    right: 4px;
+    bottom: 10px;
+    width: 6px;
+    border-radius: 20px;
+    pointer-events: none;
+
+    /* glass overlay */
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  /* SCROLLBAR */
+  .exp-card::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  /* TRACK */
+  .exp-card::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 10px 0; /* 🔥 TOP-BOTTOM GAP = rounded feel */
+  }
+
+  /* THUMB */
+  .exp-card::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #6c63ff, #ff4ecd);
+    border-radius: 50px;
+  }
+
   .palette {
     grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
     gap: 5px;
@@ -2680,6 +2757,10 @@ input[type="range"]::-moz-range-thumb {
     width: 235px;
   }
 
+  #quoteText {
+    display: block;
+  }
+
   .exp-section {
     padding: unset;
   }
@@ -2690,6 +2771,7 @@ input[type="range"]::-moz-range-thumb {
 
   .contact-section {
     padding: 0px 20px;
+    margin: unset;
   }
 
   .contact-wrapper {
@@ -2704,7 +2786,13 @@ input[type="range"]::-moz-range-thumb {
 
   .contact-form button {
     width: 100%;
-    padding: 12px 25px;
+    /* padding: 12px 25px; */
+  }
+
+  .contact-links a,
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 12px;
   }
 
   .footer {
