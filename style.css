@@ -2502,6 +2502,7 @@ input[type="range"]::-moz-range-thumb {
 
 /* email block */
 .contact-email span {
+  /* font-size: 13px; */
   color: #333;
 }
 
@@ -2864,6 +2865,7 @@ footer {
   .contact-section {
     padding: 0px 20px;
     margin: unset;
+    padding-bottom: 60px;
   }
 
   .contact-wrapper {
