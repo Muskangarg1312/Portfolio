@@ -1319,7 +1319,6 @@ const track = document.querySelector(".exp-track");
 
 const getScrollAmount = () => track.scrollWidth - window.innerWidth;
 
-// ✅ MAIN SCROLL (SMOOTH + SNAP)
 gsap.to(track, {
   x: () => -getScrollAmount(),
   ease: "none",
@@ -1327,18 +1326,23 @@ gsap.to(track, {
     trigger: "#exp-scroll",
     start: "top top",
     end: () => "+=" + getScrollAmount(),
-    scrub: 0.6, // 👈 smoother (was 1 → causing lag)
+
+    scrub: 0.3,
     pin: true,
+    pinSpacing: true, // ✅ keep this TRUE
     anticipatePin: 1,
     invalidateOnRefresh: true,
 
-    // 🔥 THIS FIXES YOUR MAIN ISSUE
     snap: {
-      snapTo: 1 / (cards.length - 1), // 👈 1 scroll = 1 card
+      snapTo: 1 / (cards.length - 1),
       duration: 0.4,
       ease: "power2.out",
     },
   },
+});
+
+ScrollTrigger.config({
+  ignoreMobileResize: true,
 });
 
 // ✅ ACTIVE CARD (FIXED LOGIC)
@@ -1356,36 +1360,3 @@ ScrollTrigger.create({
     });
   },
 });
-
-// CONTACT FORM
-
-const sendBtn = document.getElementById("sendBtn");
-
-sendBtn.onclick = async () => {
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const message = document.getElementById("message").value.trim();
-
-  if (!name || !email || !message) {
-    showToast("⚠️ Fill all fields");
-    return;
-  }
-
-  try {
-    await addDoc(collection(db, "contacts"), {
-      name,
-      email,
-      message,
-      time: new Date(),
-    });
-
-    showToast("✅ Message sent");
-
-    // clear form
-    document.getElementById("name").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("message").value = "";
-  } catch (e) {
-    showToast("❌ Failed to send");
-  }
-};
